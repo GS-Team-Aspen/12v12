@@ -8,7 +8,7 @@
 	IsPlayable = 1
 	PenaltiesEnabled = true
 	EnablePickRules = 1
-	CheckAFKPlayers = 1
+	CheckAFKPlayers = 0
 	Default_Keys = 
 	[
 		{

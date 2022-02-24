@@ -188,7 +188,7 @@
 	margin-right: 6px;
 }
 #TopBarRightPlayers #TopBarPlayersContainer .SlantedContainer {
-	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_right_psd.vtex");
+	opacity-mask: url("file://{resources}/images/custom_game/import_dota/topbar_heroslant_right_psd.png");
 }
 #TopBarRightPlayers #TopBarPlayersContainer .TopBarPlayerSlot {
 	margin-right: -4px;
@@ -227,7 +227,7 @@
 	flow-children: left;
 }
 #TopBarLeftPlayers #TopBarPlayersContainer .SlantedContainer {
-	opacity-mask: url("s2r://panorama/images/masks/topbar_heroslant_left_psd.vtex");
+	opacity-mask: url("file://{resources}/images/custom_game/import_dota/topbar_heroslant_left_psd.png");
 }
 #TopBarLeftPlayers #TopBarPlayersContainer .TopBarPlayerSlot {
 	margin-left: -4px;
@@ -265,7 +265,7 @@
 }
 
 #BuybackIcon {
-	background-image: url("s2r://panorama/images/hud/reborn/buyback_topbar_alive_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/buyback_topbar_alive_psd.png");
 	background-size: 100%;
 	background-repeat: no-repeat;
 	width: 100%;
@@ -313,7 +313,7 @@
 }
 
 .TopBarBackground {
-	background-image: url("s2r://panorama/images/hud/reborn/top_bar_team_bg_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/top_bar_team_bg_psd.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	width: 98%;
@@ -367,7 +367,7 @@
 }
 .TopBarHealthBar .ProgressBarLeft {
 	background-color: #339933;
-	background-image: url("s2r://panorama/images/hud/reborn/topbar_health_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/topbar_health_psd.png");
 	background-size: cover;
 	border-radius: 0;
 }
@@ -420,7 +420,7 @@
 	width: 90px;
 	height: 46px;
 	vertical-align: top;
-	background-image: url("s2r://panorama/images/hud/reborn/glow_day_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/glow_day_psd.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	visibility: collapse;
@@ -436,7 +436,7 @@
 	width: 90px;
 	height: 46px;
 	vertical-align: top;
-	background-image: url("s2r://panorama/images/hud/reborn/glow_night_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/glow_night_psd.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	visibility: collapse;
@@ -482,11 +482,11 @@
 }
 
 .DayIcon {
-	background-image: url("s2r://panorama/images/hud/reborn/icon_sun_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/icon_sun_psd.png");
 }
 
 .NightIcon {
-	background-image: url("s2r://panorama/images/hud/reborn/icon_moon_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/icon_moon_psd.png");
 	transform: scaleX(-1);
 }
 
@@ -539,7 +539,7 @@
 
 .BuybackReady #RespawnTimer {
 	width: 100%;
-	background-image: url("s2r://panorama/images/hud/reborn/top_bar_buyback_bg_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/top_bar_buyback_bg_psd.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -550,7 +550,7 @@
 #AliveBuybackStatus {
 	width: 100%;
 	height: 100%;
-	background-image: url("s2r://panorama/images/hud/reborn/topbar_buyback_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/topbar_buyback_psd.png");
 	background-repeat: no-repeat;
 	background-size: 100%;
 	opacity: 0;
@@ -562,7 +562,7 @@
 #TopBarBuybackStatus {
 	width: 100%;
 	height: 100%;
-	background-image: url("s2r://panorama/images/hud/reborn/topbar_buyback_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/topbar_buyback_psd.png");
 	background-repeat: no-repeat;
 	background-size: 100%;
 	opacity: 0;
@@ -608,7 +608,7 @@
 	height: 30px;
 	margin-top: 4px;
 	vertical-align: bottom;
-	background-image: url("s2r://panorama/images/hud/icon_gold_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/icon_gold_psd.png");
 	background-size: 100% 100%;
 	opacity: 0;
 	horizontal-align: center;
@@ -618,7 +618,7 @@
 	z-index: 5;
 	width: 100%;
 	height: 4px;
-	background-image: url("s2r://panorama/images/hud/reborn/topbar_playerslot_vignette_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/topbar_playerslot_vignette_psd.png");
 	background-repeat: no-repeat;
 	background-size: 92% 100%;
 }
@@ -646,7 +646,7 @@
 	height: 20px;
 	margin-top: 12px;
 	vertical-align: top;
-	background-image: url("s2r://panorama/images/hud/reborn/icon_disconnect_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/icon_disconnect_png.png");
 	background-repeat: no-repeat;
 	background-size: 100%;
 	opacity: 0;
@@ -667,7 +667,7 @@
 	transition-timing-function: ease-in-out;
 }
 #ManaBar .ProgressBarLeft {
-	background-image: url("s2r://panorama/images/hud/reborn/topbar_mana_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/topbar_mana_psd.png");
 	background-size: cover;
 	border-radius: 0;
 }
@@ -680,7 +680,7 @@
 	z-index: 2;
 	width: 90px;
 	height: 46px;
-	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/bg_timer_psd.png");
 	background-size: 100%;
 	visibility: visible;
 	horizontal-align: center;
@@ -733,15 +733,15 @@ DOTAHud.IsBeforeGameplay .base {
 }
 
 .UltReady #TopBarUltIndicator {
-	background-image: url("s2r://panorama/images/hud/reborn/ult_ready_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/ult_ready_psd.png");
 }
 
 .UltReadyNoMana #TopBarUltIndicator {
-	background-image: url("s2r://panorama/images/hud/reborn/ult_no_mana_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/ult_no_mana_psd.png");
 }
 
 .UltOnCooldown #TopBarUltIndicator {
-	background-image: url("s2r://panorama/images/hud/reborn/ult_cooldown_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/ult_cooldown_psd.png");
 }
 
 .NightTime #NightGlow {

@@ -1,108 +1,94 @@
---[[
-	Times in seconds
---]]
+local BASE_TIME = 360
+local WARN_TIME = 240
+local BLOCK_TIME = 600
+local MIN_WARDS_FOR_TRACKING = 5
+local TIME_STEP = 2
 
-local BASE_TIME = 480 -- Time for see, player save or use wards
-local BLOCK_TIME = 240 -- Time to block buying and pick up ward
---[[
-	System work with this items list. You need write ID from KV files (original dota or custom)
---]]
-local wardsID = {
-	[42] = "item_ward_observer",
-	[43] = "item_ward_sentry",
-	[218] = "item_ward_dispenser",
-}
-
-_G.wardsList = {
+_G.WARDS_LIST = {
 	["item_ward_observer"] = true,
 	["item_ward_sentry"] = true,
 	["item_ward_dispenser"] = true,
 }
 
-_G.playerIsBlockForWards = {}
-_G.playerHasTimerWards = {}
+local blocked_player_for_wards = {}
+local tracked_players = {}
+local items_holding_time = {}
 
-function ItemIsWard(itemID)
-	return wardsID[itemID]
-end
+function InitWardsChecker()
+	Timers:CreateTimer(0, function()
+		for player_id = 0, 24 do
+			if tracked_players[player_id] then
+				local player = PlayerResource:GetPlayer(player_id)
+				local team = PlayerResource:GetTeam(player_id)
+				
+				if player and not player:IsNull() and team then
+					local wards_in_shop = GameRules:GetItemStockCount(team, "item_ward_observer", player_id) + GameRules:GetItemStockCount(team, "item_ward_sentry", player_id)
+					local wards_in_inventory = 0
+					
+					CallbackHeroAndCourier(player_id, function(unit)
+						for i = 0, 20 do
+							local item = unit:GetItemInSlot(i)
+							if item and not item:IsNull() and item.GetAbilityName and WARDS_LIST[item:GetAbilityName()] then
+								wards_in_inventory = wards_in_inventory + item:GetCurrentCharges() + item:GetSecondaryCharges()
+							end
+						end
+					end)
 
-function SearchCourierForPlayer(playerID)
-	local couriers = Entities:FindAllByClassname('npc_dota_courier')
-	for _, courier in pairs(couriers) do
-		if courier:GetOwner() and courier:GetOwner():GetPlayerID() == playerID then
-			return courier
-		end
-	end
-	return false
-end
+					if (wards_in_shop <= 0 and wards_in_inventory >= MIN_WARDS_FOR_TRACKING) then
+						items_holding_time[player_id] = (items_holding_time[player_id] or 0) + TIME_STEP
+					end
 
-function StartTimerHoldingCheckerForPlayer(playerID)
-	local couriers = Entities:FindAllByClassname('npc_dota_courier')
-	for i, x in pairs(couriers) do
-		print(i, x)
-	end
-
-	print("Start timer to block holding")
-	local player = PlayerResource:GetPlayer(playerID)
-	local playerEntIndex = player:GetEntityIndex()
-	_G.playerHasTimerWards[playerID] = true
-	Timers:CreateTimer("base_timer_to_holding_items" .. tostring(playerEntIndex), {
-		useGameTime = false,
-		endTime = BASE_TIME,
-		callback = function()
-			_G.playerIsBlockForWards[playerID] = true
-			_G.playerHasTimerWards[playerID] = false
-			Timers:CreateTimer("base_block_to_holding_items" .. tostring(playerEntIndex), {
-				useGameTime = false,
-				endTime = BLOCK_TIME,
-				callback = function()
-					_G.playerIsBlockForWards[playerID] = false
-					print("Hi, you UNblocked for buying and pick uping wards.")
-					return nil
+					if items_holding_time[player_id] == WARN_TIME then
+						CustomGameEventManager:Send_ServerToPlayer(player, "custom_hud_message:send", { message = "#wards_holding_warning" })
+					elseif items_holding_time[player_id] >= BASE_TIME then
+						
+						blocked_player_for_wards[player_id] = true
+						StopTrackPlayer(player_id)
+						
+						Timers:CreateTimer(BLOCK_TIME, function()
+							blocked_player_for_wards[player_id] = false
+						end)
+						
+						CallbackHeroAndCourier(player_id, DropWardsInBase)
+						return nil
+					end
+				else
+					StopTrackPlayer(player_id)
 				end
-			})
-			DropWardsInBase(player:GetAssignedHero())
-			if SearchCourierForPlayer(playerID) then
-				DropWardsInBase(SearchCourierForPlayer(playerID))
 			end
-			print("Hi, you blocked for buying and pick uping wards.")
-			return nil
 		end
-	})
+		return TIME_STEP
+	end)
 end
 
-function ReloadTimerHoldingCheckerForPlayer(playerID)
-	print("You use ward. You have new timer")
-	local playerEntIndex = PlayerResource:GetPlayer(playerID):GetEntityIndex()
-	Timers:RemoveTimer("base_timer_to_holding_items" .. playerEntIndex)
-	StartTimerHoldingCheckerForPlayer(playerID)
+function StartTrackPlayer(player_id)
+	tracked_players[player_id] = true
+	items_holding_time[player_id] = 0
 end
 
-function RemoveTimerHoldingCheckerForPlayer(playerID)
-	print("You use ward but you dont have any wards. Timer removed")
-	local playerEntIndex = PlayerResource:GetPlayer(playerID):GetEntityIndex()
-	_G.playerHasTimerWards[playerID] = false
-	Timers:RemoveTimer("base_timer_to_holding_items" .. playerEntIndex)
+function StopTrackPlayer(player_id)
+	tracked_players[player_id] = nil
+	items_holding_time[player_id] = 0
 end
 
-function HeroHasWards(hero, itemName)
-	print("start found wards")
-	for i = 0, 20 do
-		local currentItem = hero:GetItemInSlot(i)
-		if currentItem then
-			print(currentItem:GetName())
+function ReloadTimerHoldingCheckerForPlayer(player_id)
+	local b_has_ward = false
+	CallbackHeroAndCourier(player_id, function(unit)
+		for i = 0, 20 do
+			local item = unit:GetItemInSlot(i)
+			if item and not item:IsNull() and item.GetAbilityName and WARDS_LIST[item:GetAbilityName()] then
+				b_has_ward = true
+			end
 		end
-		if currentItem and (currentItem:GetName() == itemName or currentItem:GetName() == "item_ward_dispenser") then
-			print("You have ward in slot:", i)
-			return true
-		end
+	end)
+	if b_has_ward then
+		StartTrackPlayer(player_id)
+	else
+		StopTrackPlayer(player_id)
 	end
-	return false
 end
 
 function DropWardsInBase(unit)
-	print("sorry, i drop your wards in base")
-
 	local team = unit:GetTeam()
 	local fountain
 	local multiplier
@@ -121,8 +107,17 @@ function DropWardsInBase(unit)
 
 	for i = 0, 20 do
 		local currentItem = unit:GetItemInSlot(i)
-		if currentItem and _G.wardsList[currentItem:GetName()] then
+		if currentItem and WARDS_LIST[currentItem:GetName()] then
 			unit:DropItemAtPositionImmediate(currentItem, pos_item)
 		end
+	end
+end
+
+function BlockedWardsFilter(player_id, error_mess)
+	if blocked_player_for_wards[player_id] then
+		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "display_custom_error", { message = error_mess })
+		return false
+	elseif not tracked_players[player_id] then
+		StartTrackPlayer(player_id)
 	end
 end

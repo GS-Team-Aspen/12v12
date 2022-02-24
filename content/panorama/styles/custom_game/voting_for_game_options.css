@@ -66,8 +66,8 @@
 	text-shadow: 0px 0px 2px 1 #ffd600;
 }
 #VoteOptionButton {
-	height: 31px;
 	width: 85%;
+	padding: 5px 5px;
 	background-color: #222529;
 	box-shadow: inset rgba(255, 255, 255, 0.07) -2px 1px 1px -1px;
 	transition: brightness 0.25s ease-in-out 0s, transform 0.15s ease-in-out 0s, box-shadow 0.11s ease-in-out 0s;
@@ -89,4 +89,27 @@
 	align: center center;
 	font-weight: lighter;
 	color: gainsboro;
+	text-align: center;
+}
+
+#NoticeContainer {
+	width: 800px;
+	height: 110px;
+	border: 3px solid #222529;
+	border-radius: 4px;
+	background-image: url("file://{resources}/images/custom_game/import_dota/ability_bg_psd.png");
+	background-color: #263238;
+	background-size: 100%;
+	margin-top: 50px;
+	margin-left: 50px;
+	padding: 0px 3px 2px 3px;
+}
+
+#NoticeLabel {
+	align: center center;
+	text-align: center;
+	color: #ff0000;
+	font-size: 28px;
+	text-overflow: shrink;
+	text-shadow: 0px 0px 2px 2 rgba(0, 0, 0, 0.89);
 }

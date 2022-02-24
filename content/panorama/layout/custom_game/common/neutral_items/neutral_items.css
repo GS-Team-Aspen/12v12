@@ -11,11 +11,11 @@
 .NewItem {
 	horizontal-align: right;
 	margin: 4px;
-	background-image: url( "s2r://panorama/images/hud/reborn/item_purchase_bg_psd.vtex" );
+	background-image: url("file://{resources}/images/custom_game/import_dota/item_purchase_bg_psd.png");
 	background-size: cover;
-	transform: translatex( 500px );
-    transition-property: transform;
-    transition-duration: 0.3s;
+	transform: translatex(500px);
+	transition-property: transform;
+	transition-duration: 0.3s;
 }
 
 .Main {
@@ -28,11 +28,11 @@
 	height: 45px;
 	margin-top: 13px;
 	margin-left: 8px;
-	opacity: .55;
+	opacity: 0.55;
 }
 
 .NewItem.Slide {
-	transform: translatex( 0px );
+	transform: translatex(0px);
 }
 
 #ItemImage {
@@ -47,7 +47,7 @@
 
 .Button {
 	margin: 3px;
-	background-image: url( "s2r://panorama/images/hud/reborn/shop_launcher_button_psd.vtex" );
+	background-image: url("file://{resources}/images/custom_game/import_dota/shop_launcher_button_psd.png");
 	background-size: 100%;
 	padding: 4px 12px 4px 12px;
 	max-height: 30px;
@@ -64,8 +64,8 @@
 	height: 3px;
 	width: 100%;
 	background-color: white;
-    transition-property: width;
-    transition-duration: 15s;
+	transition-property: width;
+	transition-duration: 15s;
 }
 
 #Countdown.Active {
@@ -98,5 +98,5 @@ DOTAHeroImage {
 	height: 16px;
 	background-size: 100%;
 	margin: 4px;
-	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/x_close_png.png");
 }

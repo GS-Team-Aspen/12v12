@@ -350,7 +350,7 @@
 	border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 	flow-children: right;
-	box-shadow: inset rgba(0, 0, 0, 0.84) -5px -15px 20px -10px;
+	box-shadow: inset rgba(0, 0, 0, 0.84) 0px -10px 20px -15px;
 	transition: brightness 0.2s ease-in-out 0s;
 }
 .Boost:hover {
@@ -446,11 +446,17 @@
 .BuyBoost {
 	width: 100%;
 	height: 53px;
-	background-color: BlackBackground;
 	border-radius: 8px;
 	flow-children: down;
-	box-shadow: rgb(225, 119, 56) 0px 0px 0px 0px;
+	box-shadow: fill rgba(225, 119, 56, 0.4) 0px 0px 1px 1%;
+	background-size: 100%;
 	transition: background-color 0.2s ease-in-out 0s, box-shadow 0.2s ease-in-out 0s;
+}
+#BuyBoost_golden_booster:not(.block) {
+	background-image: url("file://{resources}/images/custom_game/collection/golden_booster_price.png");
+}
+#BuyBoost_base_booster:not(.block) {
+	background-image: url("file://{resources}/images/custom_game/collection/base_booster_price.png");
 }
 .BuyBoost.block {
 	background-image: url("file://{resources}/images/custom_game/payment/payment_bg.png");
@@ -464,7 +470,7 @@
 }
 .BuyBoost:hover {
 	background-color: rgba(0, 0, 0, 0.8);
-	box-shadow: rgb(225, 119, 56) 0px 0px 5px 0px;
+	box-shadow: fill rgb(225, 119, 56) 0px 0px 6px 1%;
 }
 .BuyBoost:hover Label {
 	brightness: 1.5;
@@ -508,6 +514,10 @@
 	border-top-left-radius: 7px;
 	padding-left: 10px;
 	padding-top: 2px;
+	visibility: collapse;
+}
+.ItemType.NotOtherOnly {
+	visibility: visible;
 }
 .ItemType.Selected {
 	background-color: BlackBackground;
@@ -804,12 +814,13 @@
 }
 #PaymentPanel {
 	width: 520px;
-	height: 620px;
+	/*height: 620px;*/
 	align: center center;
 	background-image: url("file://{resources}/images/custom_game/payment/payment_bg.png");
 	background-size: 100%;
 	flow-children: down;
 	box-shadow: black 0px 0px 10px 0px;
+	padding-bottom: 15px;
 }
 .HeaderWithCloseButton {
 	width: 100%;
@@ -849,7 +860,7 @@
 }
 #PurchasingInfoWrap {
 	width: 430px;
-	height: 168px;
+	/*min-height: 168px;*/
 	horizontal-align: center;
 	margin-top: 25px;
 	flow-children: right;
@@ -879,7 +890,7 @@
 	color: #d4d4d4;
 }
 #PurchasingDescription {
-	max-height: 60px;
+	/*max-height: 60px;*/
 	font-size: 15px;
 	text-align: left;
 	color: #898b97;
@@ -935,10 +946,10 @@
 	height: 57px;
 }
 .PaymentMethod:hover Image {
-	box-shadow: inset rgba(0, 0, 0, 1) 3px 3px 6px 6px;
+	box-shadow: inset rgba(0, 0, 0, 1) 0px 0px 6px 3px;
 }
 .PaymentMethod:active Image {
-	box-shadow: inset rgba(0, 0, 0, 1) 2px 2px 4px 4px;
+	box-shadow: inset rgba(0, 0, 0, 1) 0px 0px 5px 5px;
 }
 #PaymentDescription {
 	margin: 30px 40px 0px 40px;
@@ -1340,13 +1351,13 @@
 }
 @keyframes 'treasureGlow' {
 	0% {
-		box-shadow: inset #ff1000 4px 4px 2px 8px;
+		box-shadow: inset #ff1000 0px 0px 5px 1px;
 	}
 	50% {
-		box-shadow: inset #ff1000 4px 4px 8px 8px;
+		box-shadow: inset #ff1000 0px 0px 10px 4px;
 	}
 	100% {
-		box-shadow: inset #ff1000 4px 4px 2px 8px;
+		box-shadow: inset #ff1000 0px 0px 5px 1px;
 	}
 }
 #TextContentRoot {
@@ -1416,14 +1427,17 @@
 	horizontal-align: center;
 	opacity: 0.8;
 }
+#ItemsPreviewListRoot {
+	width: 100%;
+	height: 100%;
+	margin: 180px 10px 65px 10px;
+}
 #ItemsPreviewList {
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.6);
-	margin: 180px 10px 65px 10px;
-	box-shadow: inset rgba(0, 0, 0, 0.5) -15px 6px 10px -50px;
 	flow-children: right-wrap;
-	padding: 20px 49px 0px 51px;
+	padding: 20px 51px 0px 51px;
 	overflow: clip scroll;
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
@@ -1540,7 +1554,7 @@
 	width: 90px;
 	background-size: 16px 16px;
 	background-position: 0% 50%;
-	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/x_close_png.png");
 	background-repeat: no-repeat;
 	horizontal-align: right;
 	margin-right: 30px;
@@ -1654,8 +1668,7 @@
 	background-color: gradient(linear, 0% 0%, 100% 0%, from(#d57120), to(#833814));
 	horizontal-align: right;
 	transform: rotateZ(45deg);
-	margin-top: 15px;
-	margin-right: -30px;
+	margin: 15px -30px 0px 30px;
 	text-align: center;
 	padding-top: 3px;
 	padding-left: 26px;
@@ -1671,7 +1684,7 @@
 .IsTreasure #TreasureShowInfo {
 	width: 26px;
 	height: 26px;
-	background-image: url("s2r://panorama/images/hud/reborn/icon_inspect_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/icon_inspect_psd.png");
 	background-size: 100%;
 	margin: 4px;
 	transition: brightness 0.1s ease-in-out 0s;
@@ -1681,4 +1694,44 @@
 }
 #TreasureShowInfo:active {
 	brightness: 0.8;
+}
+
+#OpenGiftCodes {
+	background-color: rgba(0, 0, 0, 0.7);
+	horizontal-align: right;
+	margin-top: 50px;
+	font-weight: lighter;
+	width: 100px;
+	height: 52px;
+	margin-right: 16px;
+	border-radius: 8px;
+	padding: 2px;
+	transition: background-color 0.15s ease-in-out 0s, brightness 0.1s ease-in-out 0s;
+}
+#OpenGiftCodes:hover {
+	background-color: rgba(0, 0, 0, 0.85);
+}
+#OpenGiftCodes:active {
+	brightness: 1.5;
+	sound: "General.ButtonClick";
+}
+#OpenGiftCodes Label {
+	text-align: center;
+	align: center center;
+	text-overflow: shrink;
+	text-transform: uppercase;
+	color: #8babd8;
+}
+#GiftCodePaymentFlag {
+	horizontal-align: center;
+	margin-top: 10px;
+}
+#GiftCodePaymentFlag Label {
+	color: #898b97;
+}
+#GiftCodePaymentFlag:hover Label {
+	color: #8195bf;
+}
+#GiftCodePaymentFlag:selected Label {
+	color: #a4beef;
 }

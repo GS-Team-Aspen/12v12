@@ -58,7 +58,7 @@ function getBans() {
 	return result;
 }
 
-GameEvents.Subscribe("banned_heroes", function(event) {
+GameEvents.SubscribeProtected("banned_heroes", function(event) {
 	GameEvents.SendCustomGameEventToServer("banned_heroes", {
 		eventId: event.eventId,
 		result: getBans(),

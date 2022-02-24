@@ -7,7 +7,10 @@ SmartRandom.BannedHeroesEventListeners = SmartRandom.BannedHeroesEventListeners 
 function SmartRandom:SetPlayerInfo(playerId, heroes, err)
 	local table = CustomNetTables:GetTableValue("game_state", "smart_random") or {}
 	SmartRandom.SmartRandomHeroes[playerId] = heroes
-	table[playerId] = heroes or err
+	table[playerId] = heroes
+	if not heroes or #heroes < 3 then
+		table[playerId] = err
+	end
 	CustomNetTables:SetTableValue("game_state", "smart_random", table)
 end
 

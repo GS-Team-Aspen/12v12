@@ -37,7 +37,7 @@
 #CloseFeedback {
 	width: 18px;
 	height: 18px;
-	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/x_close_png.png");
 	background-size: 100%;
 	wash-color: #889be2;
 	align: right top;
@@ -51,9 +51,13 @@
 	brightness: 0.8;
 	sound: "General.ButtonClick";
 }
-#FeedbackText {
+#FeedbackTextRoot {
 	width: 100%;
 	height: 240px;
+}
+#FeedbackText {
+	width: 100%;
+	height: 100%;
 	padding: 8px 10px 4px 10px;
 	background-color: rgba(0, 0, 0, 0.6);
 	border: 0px solid transparent;
@@ -62,7 +66,6 @@
 	white-space: normal;
 	overflow: clip scroll;
 	font-size: 19px;
-	box-shadow: inset rgba(0, 0, 0, 0.75) -15px 6px 10px -50px;
 }
 #FeedbackText #PlaceholderText {
 	text-align: center;

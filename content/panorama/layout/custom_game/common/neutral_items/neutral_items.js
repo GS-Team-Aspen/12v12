@@ -8,6 +8,7 @@ function NeutralItemPickedUp( data ) {
 	if ( itemPanels[data.item] ) {
 		return
 	}
+
 	var choiceWasMade = false
 	let item = $.CreatePanel( "Panel", $( "#ItemsContainer" ), "" )
 	item.BLoadLayoutSnippet( "NewItem" )
@@ -15,14 +16,16 @@ function NeutralItemPickedUp( data ) {
 	item.FindChildTraverse( "ItemImage" ).itemname = Abilities.GetAbilityName( data.item )
 	item.FindChildTraverse( "ButtonKeep" ).SetPanelEvent( "onactivate", function() {
 		GameEvents.SendCustomGameEventToServer( "neutral_item_keep", {
-			item: data.item
+			item: data.item,
+			secret: data.secret
 		} )
 		item.visible = false
 		choiceWasMade = true
 	} )
 	item.FindChildTraverse( "ButtonDrop" ).SetPanelEvent( "onactivate", function() {
 		GameEvents.SendCustomGameEventToServer( "neutral_item_drop", {
-			item: data.item
+			item: data.item,
+			secret: data.secret
 		} )
 		item.visible = false
 		choiceWasMade = true
@@ -35,7 +38,8 @@ function NeutralItemPickedUp( data ) {
 	$.Schedule( 15, function() {
 		if (!choiceWasMade){
 			GameEvents.SendCustomGameEventToServer( "neutral_item_drop", {
-            	item: data.item
+            	item: data.item,
+            	secret: data.secret
 			} )
 		}
 		item.RemoveClass( "Slide" )
@@ -52,7 +56,8 @@ function NeutralItemDropped( data ) {
 	item.FindChildTraverse( "ItemImage" ).itemname = Abilities.GetAbilityName( data.item )
 	item.FindChildTraverse( "ButtonTake" ).SetPanelEvent( "onactivate", function() {
 		GameEvents.SendCustomGameEventToServer( "neutral_item_take", {
-			item: data.item
+			item: data.item,
+			secret: data.secret
 		} )
 	} )
 	item.FindChildTraverse( "CloseButton" ).SetPanelEvent( "onactivate", function() {
@@ -64,9 +69,11 @@ function NeutralItemDropped( data ) {
 	droppedItems[data.item] = item
 
 	$.Schedule( 15, function() {
-		item.RemoveClass( "Slide" )
-		item.DeleteAsync( 0.3 )
-	} )
+		if (item.IsValid()) {
+			item.RemoveClass( "Slide" )
+			item.DeleteAsync( 0.3 )
+		}
+	})
 }
 
 function NeutralItemTaked( data ) {
@@ -91,6 +98,6 @@ function NeutralItemTaked( data ) {
 	} )
 }
 
-GameEvents.Subscribe( "neutral_item_taked", NeutralItemTaked )
-GameEvents.Subscribe( "neutral_item_dropped", NeutralItemDropped )
-GameEvents.Subscribe( "neutral_item_picked_up", NeutralItemPickedUp )
+GameEvents.SubscribeProtected( "neutral_item_taked", NeutralItemTaked )
+GameEvents.SubscribeProtected( "neutral_item_dropped", NeutralItemDropped )
+GameEvents.SubscribeProtected( "neutral_item_picked_up", NeutralItemPickedUp )

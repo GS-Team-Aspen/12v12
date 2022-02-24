@@ -2,6 +2,7 @@
 {
     "item_patreonbundle_1"
     {
+		"ID"							"20011"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityCastAnimation"			"ACT_INVALID"
@@ -28,6 +29,7 @@
 
     "item_patreonbundle_2"
     {
+		"ID"							"20012"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityCastAnimation"			"ACT_INVALID"
@@ -56,7 +58,8 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                            "item_monkey_king_bar"
+		"ID"							"20009"
+        "BaseClass"                      "item_monkey_king_bar"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
         // Item Info
@@ -67,6 +70,7 @@
         "ItemAliases"                   "mkb;monkey king bar"
         "ItemDeclarations"              "DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
         "ShouldBeSuggested"             "1"
+        "AbilityTextureName"	"custom/Frosthaven_Consumables_Bundle"
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -97,6 +101,7 @@
 
     "item_patreon_1"
     {
+		"ID"							"20013"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_POINT_TARGET | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -124,6 +129,7 @@
     }
     "item_patreon_2"
     {
+		"ID"							"20014"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityCastAnimation"			"ACT_INVALID"
@@ -149,6 +155,7 @@
     }
     "item_patreon_3"
     {
+		"ID"							"20015"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
@@ -175,6 +182,7 @@
     }
     "item_patreon_4"
     {
+		"ID"							"20016"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityCastAnimation"			"ACT_INVALID"
@@ -199,6 +207,7 @@
     }
     "item_patreon_5"
     {
+		"ID"							"20017"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -226,6 +235,7 @@
     }
     "item_patreon_6"
     {
+		"ID"							"20018"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityCastAnimation"			"ACT_INVALID"
@@ -251,6 +261,7 @@
     }
     "item_patreon_7"
     {
+		"ID"							"20019"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
@@ -277,6 +288,7 @@
     }
     "item_patreon_8"
     {
+		"ID"							"20020"
         "BaseClass"	"item_datadriven"
         "AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -304,6 +316,7 @@
     }
     "item_banhammer"
     {
+		"ID"							"20021"
         "BaseClass"						"item_datadriven"
         "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -342,7 +355,7 @@
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
-        "ID"							"1503"
+        "ID"							"20001"
         "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
         "ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
         "BaseClass"						"item_datadriven"
@@ -360,6 +373,7 @@
 
     "item_disable_help_custom"
 	{
+		"ID"							"20022"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"custom/item_disable_help_custom"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -389,6 +403,7 @@
 
 	"item_mute_custom"
 	{
+		"ID"							"20023"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"custom/item_mute_custom"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -750,10 +765,53 @@
             "ItemCost"                      "0"
             "ItemPurchasable"               "0"
     }
-
+    "item_unstable_wand"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    "item_pogo_stick"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    "item_misericorde"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    "item_paintball"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    "item_ascetic_cap"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    "item_heavy_blade"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    "item_force_field"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    "item_black_powder_bag"
+    {
+            "ItemCost"                      "0"
+            "ItemPurchasable"               "0"
+    }
+    
+    
+    
 	"item_reset_mmr"
 	{
 		"BaseClass"						"item_lua"
+		"ID"							"20010"
 		"AbilityTextureName"			"custom/item_reset_mmr"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"ItemQuality"					"artifact"
@@ -772,5 +830,255 @@
 	{
 		"ItemInitialStockTime"			"990"
 	}
-
+	
+	"item_teleport_perk_0"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20001"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityTextureName"	        "item_teleport_perk"
+		"ScriptFile"					"items/item_teleport_perk.lua"
+ 
+		"AbilityManaCost"               "0"
+		"AbilityChannelTime"			"3"
+		"ItemCost"						"100"
+		"AbilityCooldown"				"90"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_channel_time"	"3"
+			}
+		}
+	}
+	"item_teleport_perk_1"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20002"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityTextureName"	        "item_teleport_perk"
+		"ScriptFile"					"items/item_teleport_perk.lua"
+		
+		"AbilityManaCost"               "0"
+		"AbilityChannelTime"			"3"
+		"ItemCost"						"200"
+		"AbilityCooldown"				"60"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_channel_time"	"3"
+			}
+		}
+	}
+	"item_teleport_perk_2"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20003"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityTextureName"	        "item_teleport_perk"
+		"ScriptFile"					"items/item_teleport_perk.lua"
+		
+		"AbilityManaCost"               "0"
+		"AbilityChannelTime"			"3"
+		"ItemCost"						"300"
+		"AbilityCooldown"				"30"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_channel_time"	"3"
+			}
+		}
+	}
+	"item_teleport_perk_3"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20004"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityTextureName"	        "item_teleport_perk"
+		"ScriptFile"					"items/item_teleport_perk.lua"
+		
+		"AbilityManaCost"               "0"
+		"AbilityChannelTime"			"3"
+		"ItemCost"						"400"
+		"AbilityCooldown"				"15"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_channel_time"	"3"
+			}
+		}
+	}
+	"item_linken_perk_0"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20005"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"	        "item_linken_perk"
+		"ScriptFile"					"items/item_linken_perk.lua"
+		
+		"AbilityManaCost"               "0"
+		"ItemCost"						"100"
+		"AbilityCooldown"				"60"
+		"AbilityCastRange"				"700"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_cooldown"		"200.0"
+			}
+		}
+	}
+	"item_linken_perk_1"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20006"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"	        "item_linken_perk"
+		"ScriptFile"					"items/item_linken_perk.lua"
+		
+		"AbilityManaCost"               "0"
+		"ItemCost"						"200"
+		"AbilityCooldown"				"45"
+		"AbilityCastRange"				"700"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_cooldown"		"100.0"
+			}
+		}
+	}
+	"item_linken_perk_2"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20007"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"	        "item_linken_perk"
+		"ScriptFile"					"items/item_linken_perk.lua"
+		
+		"AbilityManaCost"               "0"
+		"ItemCost"						"300"
+		"AbilityCooldown"				"30"
+		"AbilityCastRange"				"700"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_cooldown"		"50.0"
+			}
+		}
+	}
+	"item_linken_perk_3"
+	{
+		"BaseClass"						"item_lua"
+		"ID"							"20008"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"	        "item_linken_perk"
+		"ScriptFile"					"items/item_linken_perk.lua"
+		
+		"AbilityManaCost"               "0"
+		"ItemCost"						"300"
+		"AbilityCooldown"				"15"
+		"AbilityCastRange"				"700"
+		
+		"ItemStackable"					"0"
+		"ItemKillable"                  "1"
+		"ItemSellable"                  "1"
+		"ItemDroppable"                 "1"
+		"ItemPurchasable"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_cooldown"		"25.0"
+			}
+		}
+	}
+	
+	//NEXT IT 20024
 }

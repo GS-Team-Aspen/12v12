@@ -147,7 +147,7 @@ function AutoTeam:Index()
 		return _teamID
 	end
 
-	for __,pID in pairs(table.concat(highPatreons,lowPatreons)) do
+	for __,pID in pairs(table.concat_handle(highPatreons,lowPatreons)) do
 		if not playersIsParty[pID] then
 			local team = getTeamMinLevelAllTeam()
 			local maxPlayers = GameRules:GetCustomGameTeamMaxPlayers(team)
@@ -300,11 +300,11 @@ function AutoTeam:EnableFreePatreonForBalance()
 	end
 end
 
-function AutoTeam:Debug(message)
+function AutoTeam:Debug(message, to_all)
 	if not _G.AutoTeam.testing then return end
 	for i=0,DOTA_MAX_PLAYERS do
 		local steamID = tonumber(tostring(PlayerResource:GetSteamAccountID(i)))
-		if PlayerResource:GetPlayer(i) and AutoTeam.steamIDsToDebugg[steamID]  then
+		if PlayerResource:GetPlayer(i) and (AutoTeam.steamIDsToDebugg[steamID] or to_all) then
 			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(i), "debug_message", {
 			  	message = message
 			})

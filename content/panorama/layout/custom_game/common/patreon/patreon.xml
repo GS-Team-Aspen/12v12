@@ -30,31 +30,13 @@
  				<Label id="LocalServerWarningButtonLabel" text="#local_lobby_confirm" />
  			</Button>
  		</Panel>
-
- 		<Panel id="PaymentConfirmationGhostHitbox" hittest="true" >
-	 		<Panel id="PaymentConfirmationContainer" >
-	 			<Label id="PaymentConfirmationHeader" text="#purchase_confirmation_header" />
-	 			<DOTAAvatarImage id="PaymentConfirmationAvatar" steamid="local" />
-	 			<Label id="PaymentConfirmationAvatarLabel" text="" />
-	 			<Label id="PaymentConfirmationFooter" text="#purchase_confirmation_footer" />
-	 			<Panel id="PaymentConfirmationButtonsContainer" >
-	 				<Button id="PaymentConfirmationButtonYes" onactivate='ConfirmPaymentTarget()' >
-		 				<Label id="PaymentConfirmationLabelYes" text="#purchase_confirmation_yes" />
-		 			</Button>
-
-		 			<Button id="PaymentConfirmationButtonNo" onactivate='ResetPaymentTarget()' >
-		 				<Label id="PaymentConfirmationLabelNo" text="#purchase_confirmation_no" />
-		 			</Button>
-	 			</Panel>
-	 		</Panel>
-	 	</Panel>
-
+		
  		<Panel id="PatreonButtonPanel">
 			<!--<Image src="file://{resources}/layout/custom_game/common/patreon/perks/unlimited_chat_wheel.png" />-->
 			<Image id="VOIcon" src="file://{resources}/layout/custom_game/common/patreon/voicon.png" onmouseover='ShowVOIconButton()' onmouseout='HideVOIconButton()'/>
-			<TextButton id="PatreonButton" onactivate="OnPatreonButtonPressed()" text="#patreon_perks" />
+			<TextButton id="PatreonButton" onactivate="OpenShop()" text="#patreon_perks" />
 			<Button id="PatreonButtonSmallerImage" onmouseover='ShowClosePatreonButton()' onmouseout='HideClosePatreonButton()'>
-				<Image src="file://{resources}/layout/custom_game/common/patreon/small_button.png" onactivate="OnPatreonButtonPressed()"/>
+				<Image src="file://{resources}/layout/custom_game/common/patreon/small_button.png" onactivate="OpenShop()"/>
 			</Button>
 			<Button id="CloseVOIconButton" onactivate="CloseVOIconButton();" onmouseover='ShowVOIconButton()' onmouseout='HideVOIconButton()'/>
 			<Button id="ClosePatreonButton" onactivate="ClosePatreonButton();" onmouseover='ShowClosePatreonButton()' onmouseout='HideClosePatreonButton()'/>
@@ -69,104 +51,6 @@
 					</Panel>
 				</Panel>
 				<Button class="PatreonCloseButtonX" onactivate="hideNewMethodsAnnouncement()" />
-			</Panel>
-		</Panel>
- 		<Panel hittest="true" hittestchildren="true" id="PatreonWindow">
-			<Panel class="PatreonHeader">
-				<Button class="PatreonCloseButtonX" onactivate="OnPatreonButtonPressed()" />
-				<Label id="HeaderLabel" class="PatreonLabel" text="#patreon_perks"/>
-			</Panel>
-
-			<Panel id="PatreonPerksContainer" />
-
-			<Panel id="PatreonFooter">
-				<Label id="IsNotPatreonText" class="PatreonText" text="#not_supporter" />
-
-				<Panel id="PatreonSupportButtons">
-					<TextButton
-						id="SupportButtonPatreon"
-						class="SupportButton"
-						text="#patreon_support_patreon"
-						onactivate="ExternalBrowserGoToURL('https://www.patreon.com/join/dota2unofficial')"
-					/>
-					<TextButton
-						id="SupportButtonPaymentWindow"
-						class="SupportButton"
-						text="#patreon_support_payment"
-						onactivate="OpenShop()"
-					/>
-				</Panel>
-
-				<Panel id="PatreonSupporter">
-					<Label id="PatreonSupporterText" class="PatreonText" text="#standard_tier_supporter" />
-					<TextButton
-						id="PatreonSupporterUpgrade"
-						class="SupportButton"
-						text="Upgrade to Advanced"
-						onactivate="openUpgradePaymentWindow()"
-					/>
-				</Panel>
-
-				<Label id="PatreonSupporterHigh" class="PatreonText" text="#high_tier_supporter" />
-
-				<Label id="ThanksText" class="PatreonText" text="#thanks_for_supporting" />
-			</Panel>
-		</Panel>
-		<Panel hittest="true" id="PaymentWindow">
-			<Button id="BackgroundCloseButton" onactivate="setPaymentWindowVisible(false)" />
-
-			<Panel id="PaymentWindowContent" hittest="true" onactivate="" >
-				<Button class="PatreonCloseButtonX" onactivate="setPaymentWindowVisible(false)" />
-
-				<HTML id="PaymentWindowBody" acceptsinput="true" />
-				<Panel id="PaymentWindowLoader">
-					<Panel id="spinner_container" >
-						<Panel id="loading_spinner" class="Spinner" />
-						<Label id="alipay_loading_warning" text="#alipay_loading_warning" />
-					</Panel>
-				</Panel>
-				<Panel id="PaymentWindowError">
-					<Label id="PaymentWindowErrorMessage" />
-				</Panel>
-
-				<Panel id="PaymentWindowProviders">
-					<RadioButton group="Providers" value="WeChat" onactivate="updatePaymentWindow()" selected="true">
-						<Image src="file://{resources}/layout/custom_game/common/patreon/wechat.png" />
-					</RadioButton>
-					<RadioButton group="Providers" value="Alipay" onactivate="updatePaymentWindow()">
-						<Image src="file://{resources}/layout/custom_game/common/patreon/alipay.png" />
-					</RadioButton>
-					<Panel id="PaymentWindowUserSelectorContainer">
-						<Label id="PaymentWindowDropdownLabel" text="#purchase_for" />
-					</Panel>
-					<DOTAAvatarImage id="PaymentWindowAvatar" steamid="local" />
-				</Panel>
-
-				<Panel id="PaymentWindowPaymentKinds">
-					<RadioButton
-						group="PaymentKinds"
-						value="UpgradeTo2"
-						style="visibility: collapse;"
-						id="PaymentWindowPaymentKindsUpgradeTo2"
-					/>
-					<RadioButton
-						group="PaymentKinds"
-						value="Purchase1"
-						text="#patreon_support_tier_1"
-						onmouseover="DOTAShowTextTooltip(#patreon_support_tier_1_tooltip)"
-						onmouseout="DOTAHideTextTooltip()"
-						onactivate="updatePaymentWindow()"
-						selected="true"
-					/>
-					<RadioButton
-						group="PaymentKinds"
-						value="Purchase2"
-						text="#patreon_support_tier_2"
-						onmouseover="DOTAShowTextTooltip(#patreon_support_tier_2_tooltip)"
-						onmouseout="DOTAHideTextTooltip()"
-						onactivate="updatePaymentWindow()"
-					/>
-				</Panel>
 			</Panel>
 		</Panel>
 	</Panel>

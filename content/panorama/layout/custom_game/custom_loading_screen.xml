@@ -1,6 +1,6 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
 		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css" />
 	</styles>
 	<scripts>
@@ -33,6 +33,7 @@
 			<Image src="file://{resources}/images/custom_game/tips_icon/respawn.png"/>
 			<Image src="file://{resources}/images/custom_game/tips_icon/savefavs.png"/>
 			<Image src="file://{resources}/images/custom_game/tips_icon/mmr_balance.png"/>
+			<Image src="file://{resources}/images/custom_game/tips_icon/nerfed2.png"/>
 		</Panel>
 
 <!--		<Panel class="FormLinkContainer">-->

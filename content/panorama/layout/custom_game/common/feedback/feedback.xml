@@ -2,6 +2,7 @@
 	<styles>
 		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
 		<include src="file://{resources}/layout/custom_game/common/feedback/feedback.css"/>
+		<include src="file://{resources}/layout/custom_game/common/styles/dotau_styles.css" />
 	</styles>
 
 	<scripts>
@@ -14,8 +15,11 @@
 			<Label id="FeedbackHeader" text="#feedback"/>
 			<Button id="CloseFeedback" onactivate="CloseFeedback()"/>
 		</Panel>
-		<TextEntry id="FeedbackText" multiline="true" onactivate="CheckDefaultText()" placeholder="#default_feedback" 
-				   ontextentrychange="UpdateFeedbackText()"/>
+		<Panel id="FeedbackTextRoot" hittest="false">
+			<Panel id="OverlayShadow_Top" hittest="false"/>
+			<TextEntry id="FeedbackText" multiline="true" onactivate="CheckDefaultText()" placeholder="#default_feedback"
+					   ontextentrychange="UpdateFeedbackText()"/>
+		</Panel>
 		<Label id="MaxSymbols" text="{s:curr}/{s:max}"/>
 		<Button id="FeedbackSendButton" class="Cooldown Blocked" onactivate="SendFeedback()" onmouseover="FeedbackTooltip()" onmouseout="DOTAHideTextTooltip()">
 			<Label id="FeedbackSendButtonText" text="#feedback_send"/>

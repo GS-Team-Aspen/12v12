@@ -1,0 +1,402 @@
+.SC_Root {
+	align: center center;
+	width: 524px;
+	background-image: url("file://{resources}/images/custom_game/collection/spin_background.png");
+	background-size: 100%;
+	box-shadow: transparent 0px 0px 0px 0px;
+	flow-children: down;
+	opacity: 0;
+	transform: translatey(-70px);
+	transition: opacity 0.2s ease-in-out 0s, transform 0.15s ease-in-out 0s, box-shadow 0.2s ease-in-out 0s;
+	z-index: -100;
+}
+
+.show {
+	opacity: 1;
+	transform: translatey(0px);
+	box-shadow: black 0px 0px 10px 0px;
+}
+
+#SC_ChatHeader {
+	width: 100%;
+	height: 50px;
+	flow-children: right;
+}
+
+#SC_ChatHeaderText {
+	width: 420px;
+	align: center center;
+	font-size: 25px;
+	color: white;
+	text-shadow: 0px 1px 2px 3 rgba(0, 0, 0, 0.4);
+	font-weight: lighter;
+	padding: 10px 0px 10px 11px;
+	text-overflow: shrink;
+}
+
+#SC_Close {
+	width: 24px;
+	height: 24px;
+	background-image: url("file://{resources}/images/custom_game/import_dota/x_close_png.png");
+	background-size: 100%;
+	wash-color: #889be2;
+	align: right center;
+	margin-right: 8px;
+	transition: brightness 0.15s ease-in-out 0s;
+}
+#SC_Close:hover {
+	brightness: 1.6;
+}
+#SC_Close:active {
+	brightness: 0.8;
+	sound: "General.ButtonClick";
+}
+#SC_MessagesRoot {
+	width: 100%;
+	height: 410px;
+	background-color: rgba(0, 0, 0, 0.6);
+	margin: 0px 10px;
+}
+#SC_MessagesContainer {
+	height: 100%;
+	width: 100%;
+	flow-children: down;
+	overflow: squish scroll;
+}
+
+#SC_InputLine {
+	width: 100%;
+	vertical-align: bottom;
+	opacity: 0;
+	margin: 10px 10px 5px 10px;
+}
+
+.Loaded #SC_InputLine {
+	opacity: 1;
+}
+
+#SC_TextEntry {
+	width: 345px;
+	border: 1px solid transparent;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+#SC_TextEntry #PlaceholderText {
+	font-style: italic;
+}
+#SC_SymbolsCounter {
+	text-align: center;
+	margin-top: 40px;
+}
+
+.Limit {
+	color: gradient(linear, 0% 100%, 0% 0%, from(rgb(230, 0, 1)), to(#a20001));
+}
+
+#SC_SymbolsCounter:not(.Limit) {
+	color: #bfbfbf;
+}
+
+#SC_Submit {
+	height: 33px;
+	width: 154px;
+	align: right top;
+	margin-top: 1px;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 3px 1px;
+	transition-property: brightness;
+	transition-duration: 0.1s;
+	background-image: url("file://{images}/custom_game/ability_selection/button_bg_reroll.png");
+	background-size: 100%;
+}
+
+#SC_Submit.COOLDOWN {
+	saturation: 0;
+}
+#SC_Submit:hover:not(.COOLDOWN) {
+	brightness: 1.5;
+}
+#SC_Submit:active:not(.COOLDOWN) {
+	brightness: 1.1;
+}
+
+#SC_SubmitText {
+	align: center center;
+	color: white;
+	text-shadow: 1px 1px 2px 2 #000000ff;
+	font-weight: bold;
+	text-overflow: shrink;
+	width: 100%;
+	text-align: center;
+}
+
+.SC_Message {
+	width: 100%;
+	flow-children: down;
+	padding: 8px 10px;
+}
+.Ping {
+	background-color: rgba(76, 49, 37, 0.7);
+}
+.SC_Message_Info {
+	width: 100%;
+	height: 25px;
+	flow-children: right-wrap;
+}
+.SC_Msg_Component {
+	vertical-align: center;
+}
+
+#SC_Msg_Date {
+	margin-left: 3px;
+	text-align: center;
+	font-weight: lighter;
+	color: #7c7d82;
+	font-size: 16px;
+}
+
+.Dev #SC_Msg_Date {
+	margin-left: 5px;
+}
+
+#SC_Msg_Avatar,
+#SC_Msg_Anon_Image {
+	width: 25px;
+	height: 25px;
+}
+#SC_Msg_Anon_Image {
+	visibility: collapse;
+}
+
+#SC_Msg_Name {
+	font-weight: bold;
+	margin-left: 5px;
+	max-width: 320px;
+}
+
+.Dev #SC_Msg_Name,
+.Dev #SC_Msg_Avatar,
+.Anon #SC_Msg_Name,
+.Anon #SC_Msg_Avatar {
+	visibility: collapse;
+}
+#SC_Msg_Anon {
+	color: white;
+	font-weight: semi-bold;
+	visibility: collapse;
+	margin-left: 5px;
+}
+.Anon #SC_Msg_Anon,
+.Anon #SC_Msg_Anon_Image {
+	visibility: visible;
+}
+
+#SC_Dev_Root {
+	visibility: collapse;
+	flow-children: right;
+}
+.Dev #SC_Dev_Root {
+	visibility: visible;
+}
+#SC_Dev_Root {
+	border: 1px solid #00bf00;
+	padding: 1px 5px;
+}
+.SC_Dev {
+	text-transform: uppercase;
+	color: white;
+	font-size: 13px;
+	font-weight: semi-bold;
+}
+#SC_Dev_Name {
+	color: gradient(linear, 0% 100%, 0% 0%, from(#06ba11), to(#05f712));
+	margin-left: 2px;
+	max-width: 320px;
+}
+
+#SC_Msg_Text {
+	color: white;
+	text-shadow: 1px 1px 2px 2 rgba(0, 0, 0, 0.2);
+	margin-top: 2px;
+}
+.Locked #SC_Msg_Text {
+	text-shadow: rgba(255, 255, 255, 0.8) 0px 0px 9px 1;
+	color: transparent;
+}
+
+#OpenSyncedChat {
+	opacity-mask: url("file://{resources}/layout/custom_game/common/synced_chat/chat_icon.png");
+	background-color: #cdf;
+	background-size: 28px;
+	vertical-align: top;
+	margin-left: 15px;
+	brightness: 1;
+	wash-color: none;
+}
+#OpenSyncedChat.Ping {
+	opacity: 0.8;
+	animation-name: gold_glow;
+	animation-duration: 1.2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+@keyframes 'gold_glow' {
+	0% {
+		background-color: gradient(linear, 0% 100%, 0% 0%, from(#e28a2e), to(#fcd065));
+	}
+	25% {
+		background-color: gradient(linear, 0% 120%, 0% 0%, from(#ccddff), to(#e6e8ef));
+	}
+	50% {
+		background-color: gradient(linear, 0% 100%, 0% 0%, from(#e28a2e), to(#fcd065));
+	}
+	75% {
+		background-color: gradient(linear, 0% 120%, 0% 0%, from(#ccddff), to(#e6e8ef));
+	}
+	100% {
+		background-color: gradient(linear, 0% 100%, 0% 0%, from(#e28a2e), to(#fcd065));
+	}
+}
+.ChatButton {
+	margin-top: 10px;
+	background-color: rgba(0, 0, 0, 0.61);
+	horizontal-align: center;
+	padding: 5px 15px;
+	opacity: 0;
+	flow-children: right;
+}
+.ChatButton Image {
+	visibility: collapse;
+}
+.SuppChat {
+	background-image: url("file://{resources}/images/custom_game/loading_screen/patreon_button.png");
+	background-size: 100%;
+	width: 260px;
+	padding: 5px 10px 5px 15px;
+	visibility: collapse;
+}
+.Locked .SuppChat {
+	visibility: visible;
+}
+.Locked .MoreMessage {
+	visibility: collapse;
+}
+.MoreMessage:active {
+	sound: "General.ButtonClick";
+}
+.ChatButton.SuppChat Label {
+	color: gradient(linear, 0% 100%, 0% 0%, from(#ed7a21), to(#fdd817));
+	font-size: 20px;
+	margin-left: 3px;
+	text-overflow: shrink;
+	height: 24px;
+}
+.SuppChat Image {
+	visibility: visible;
+	width: 32px;
+	height: 32px;
+	vertical-align: center;
+	margin-top: 4px;
+}
+.Loaded .ChatButton {
+	opacity: 1;
+}
+
+.ChatButton.Cooldown {
+	saturation: 0;
+	visibility: collapse;
+}
+.ChatButton:not(.Cooldown):hover {
+	brightness: 1.5;
+}
+.ChatButton:not(.Cooldown):active {
+	brightness: 0.9;
+}
+
+.ChatButton Label {
+	align: center center;
+	font-size: 17px;
+	margin-top: 1px;
+	color: white;
+	text-shadow: 0px 0px 2px 2 black;
+}
+
+#SC_NotLoadedAlert {
+	align: center center;
+	text-align: center;
+	color: white;
+	text-shadow: 0px 0px 2px 2 black;
+	font-size: 35px;
+	text-transform: uppercase;
+}
+.Loaded #SC_NotLoadedAlert {
+	opacity: 0;
+}
+#SC_InputBox1 {
+	horizontal-align: right;
+	padding: 0px;
+	margin-top: 40px;
+	flow-children: right;
+}
+#AnonMessageCheck {
+	padding: 0px;
+	margin-left: 3px;
+}
+#AnonMessageCheck:active {
+	sound: "synced_chat.anon";
+}
+#AnonMessageCheck Label {
+	letter-spacing: 0px;
+}
+#AnonMessageCheck .TickBox {
+	border: 0px solid transparent;
+	box-shadow: none;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+#AnonMessageCheck:selected .TickBox {
+	background-color: gradient(linear, 0% 0%, 0% 100%, from(#e7f6f5), to(#a0d6d7));
+	border: 3px solid rgba(0, 0, 0, 1);
+}
+#AnonMessageCheck:not(:selected):hover .TickBox {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+#TimerForUpdateRoot {
+	flow-children: right;
+}
+#TimerForUpdateRoot Image {
+	width: 19px;
+	height: 19px;
+	wash-color: #bfbfbf;
+}
+#TimerForUpdateRoot Label {
+	color: #bfbfbf;
+	margin-left: 1px;
+	width: 35px;
+	height: 21px;
+	text-overflow: shrink;
+	text-align: center;
+}
+
+#SC_MuteRoot {
+	width: 100%;
+	height: 36px;
+	background-color: rgba(0, 0, 0, 0.6);
+	visibility: collapse;
+}
+
+#SC_MuteRoot Label {
+	align: center center;
+	text-align: center;
+	text-overflow: shrink;
+	max-height: 100%;
+	color: gradient(linear, 0% 100%, 0% 0%, from(rgb(230, 0, 1)), to(#ae0001));
+}
+
+.BPlayerMuted #SC_MuteRoot {
+	visibility: visible;
+}
+.BPlayerMuted #SC_TextEntry,
+.BPlayerMuted #SC_Submit,
+.BPlayerMuted #SC_SymbolsCounter,
+.BPlayerMuted #AnonMessageCheck {
+	visibility: collapse;
+}

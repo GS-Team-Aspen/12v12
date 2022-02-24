@@ -8,7 +8,7 @@
 	background-color: #373737;
 	align: center top;
 	margin-top: 78px;
-	background-image: url("s2r://panorama/images/hud/reborn/ability_bg_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/ability_bg_psd.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	border-radius: 5px;
@@ -44,7 +44,7 @@
 }
 .WeakBonus {
 	background-color: gradient(linear, 0% 100%, 0% 0%, from(#303032), to(#6e6d77));
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/background_play_button_2x_png.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	width: 200px;
@@ -67,7 +67,7 @@
 
 #WeakClose {
 	background-color: green;
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_2x_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/background_play_button_2x_png.png");
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	width: 200px;

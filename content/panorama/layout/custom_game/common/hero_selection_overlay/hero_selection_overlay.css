@@ -1,24 +1,20 @@
-.HeroSelectionOverlayRoot
-{
+.HeroSelectionOverlayRoot {
 	width: 100%;
 	height: 100%;
 }
 
-#PlayerStats
-{
+#PlayerStats {
 	vertical-align: bottom;
 	margin-left: 450px;
 	margin-bottom: 150px;
 	flow-children: down;
 }
 
-#PlayerStatsTitle
-{
+#PlayerStatsTitle {
 	text-align: center;
 	color: white;
 }
 
-.PlayerStatsLine
-{
+.PlayerStatsLine {
 	flow-children: right;
 }

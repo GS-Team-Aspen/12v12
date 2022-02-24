@@ -1,0 +1,391 @@
+.EG_Root {
+	width: 100%;
+	height: 100%;
+	background-color: gradient(
+		linear,
+		0% 0%,
+		0% 100%,
+		from(#000000ff),
+		color-stop(0.12, #000000ff),
+		color-stop(0.5, #00000022),
+		to(#00000000)
+	);
+}
+#EG_MainPanel {
+	flow-children: down;
+	align: center center;
+	transition: transform 0.2s ease-in-out 0s;
+}
+.ShowChat #EG_MainPanel {
+	transform: translateY(-420px);
+}
+#EG_TeamsTable {
+	flow-children: down;
+	align: center center;
+}
+.EG_Team {
+	flow-children: down;
+}
+#PlayersContainer {
+	flow-children: down;
+	background-color: #202020;
+	padding: -1px 0px 1px 0px;
+}
+.LocalTeam #PlayersContainer {
+	background-color: #bebebe;
+	box-shadow: #bebebe 0px 0px 8px -1px;
+}
+.EG_Player {
+	height: 33px;
+	flow-children: right;
+	margin-top: 1px;
+}
+
+#HeroIcon {
+	border: 1px solid black;
+	width: 57px;
+	height: 33px;
+}
+.AspectRatio4x3 #HeroIcon {
+	width: 56px;
+	height: 35px;
+}
+.PlayerInfo {
+	/*flow-children: down;*/
+	width: 170px;
+	vertical-align: center;
+	height: 100%;
+}
+#PlayerName {
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 4px;
+	color: #cccccc;
+	width: 140px;
+	height: 17px;
+}
+
+#HeroNameAndDescription {
+	padding-left: 4px;
+	font-size: 13px;
+	text-shadow: 2px 2px 2px black;
+	margin-top: 0px;
+	color: #999999;
+	vertical-align: bottom;
+	height: 15px;
+	width: 100%;
+}
+#RatingChanges {
+	font-size: 14px;
+	horizontal-align: right;
+}
+#RatingChanges.MmrInc {
+	color: #00c400;
+}
+#RatingChanges.MmrDec {
+	color: #ee1807;
+}
+.EG_StatContainer {
+	margin-left: 1px;
+	height: 100%;
+	background-color: black;
+}
+.EG_StatContainer:not(.PlayerInfo) Label:not(.KilledCount) {
+	align: center center;
+	text-align: center;
+	text-overflow: shrink;
+	height: 21px;
+}
+#EG_KillsContainer,
+#Col_Kills,
+#EG_DeathsContainer,
+#Col_Deaths,
+#EG_AssistsContainer,
+#Col_Assists {
+	width: 50px;
+}
+
+.AspectRatio4x3 #EG_KillsContainer,
+.AspectRatio4x3 #Col_Kills,
+.AspectRatio4x3 #EG_DeathsContainer,
+.AspectRatio4x3 #Col_Deaths,
+.AspectRatio4x3 #EG_AssistsContainer,
+.AspectRatio4x3 #Col_Assists {
+	width: 45px;
+}
+
+#EG_Items {
+	flow-children: right;
+	padding: 0px 1px;
+}
+#Col_Items {
+	width: 302px;
+}
+.AspectRatio4x3 #Col_Items {
+	width: 184px;
+}
+.EG_Item {
+	width: 42px;
+	height: 30px;
+	margin: 1px;
+	vertical-align: center;
+}
+.AspectRatio4x3 .EG_Item {
+	width: 24px;
+	height: 17px;
+}
+.EG_NeuralItem {
+	width: 30px;
+	border-radius: 100%;
+	margin-left: 3px;
+}
+.AspectRatio4x3 .EG_NeuralItem {
+	width: 17px;
+}
+#Perk {
+	background-image: url("s2r://panorama/images/items/emptyitembg_png.vtex");
+	background-size: 100%;
+}
+.AspectRatio4x3 #Perk {
+	width: 26px;
+	height: 26px;
+}
+.PerkContainer {
+	padding: 0px 7px;
+}
+#Col_Perk {
+	width: 50px;
+}
+.AspectRatio4x3 #Col_Perk {
+	width: 44px;
+}
+#StatusEffects {
+	padding: 0px 3px;
+}
+#Col_StatusEffects {
+	width: 58px;
+}
+#EG_AghScepter {
+	width: 21px;
+	height: 23px;
+	margin-left: 1px;
+}
+#EG_AghShard {
+	width: 23px;
+	height: 13px;
+	vertical-align: bottom;
+	margin-right: -1px;
+}
+
+.EG_StatContainer .EG_NeuralItem {
+	margin-right: 3px;
+}
+
+.NotActive {
+	saturation: 0;
+	wash-color: #c4c4c4;
+}
+#Moonshard {
+	width: 26px;
+	height: 26px;
+	margin: 1px 1px 1px 25px;
+	vertical-align: center;
+	border-radius: 100%;
+}
+#EG_Networth,
+#Col_Networth {
+	width: 100px;
+}
+
+.AspectRatio4x3 #EG_Networth,
+.AspectRatio4x3 #Col_Networth {
+	width: 70px;
+}
+
+#EG_Gpm,
+#Col_Gpm {
+	width: 70px;
+}
+.AspectRatio4x3 #EG_Gpm,
+.AspectRatio4x3 #Col_Gpm {
+	width: 50px;
+}
+#EG_Xpm,
+#Col_Xpm {
+	width: 70px;
+}
+.AspectRatio4x3 #EG_Xpm,
+.AspectRatio4x3 #Col_Xpm {
+	width: 50px;
+}
+#EG_BuildingDamage,
+#Col_BuildingDamage {
+	width: 70px;
+}
+#EG_HeroDamage,
+#Col_HeroDamage {
+	width: 70px;
+}
+#EG_DamageTaken,
+#Col_DamageTaken {
+	width: 70px;
+}
+#EG_Heal,
+#Col_Heal {
+	width: 70px;
+}
+.AspectRatio4x3 #EG_Heal,
+.AspectRatio4x3 #Col_Heal {
+	width: 60px;
+}
+#EG_Wards,
+#Col_Wards {
+	width: 80px;
+}
+#EG_KilledHeroes {
+	flow-children: right;
+	padding: 0px 3px;
+}
+#Col_KilledEnemies {
+	width: 100%;
+}
+.AspectRatio4x3 .KilledCount {
+	horizontal-align: right;
+	text-align: center;
+	padding: 0px 0px 0px 0px;
+	font-size: 10px;
+	background-color: #121a20;
+	vertical-align: bottom;
+}
+
+.KilledCount {
+	horizontal-align: right;
+	text-align: center;
+	padding: 0px 1px 0px 1px;
+	font-size: 12px;
+	background-color: #121a20;
+	vertical-align: bottom;
+}
+.NoKills {
+	opacity: 0.8;
+	wash-color: #444444;
+	contrast: 0.9;
+}
+.HeroIcon {
+	width: 24px;
+	height: 24px;
+	vertical-align: center;
+}
+.AspectRatio4x3 .HeroIcon {
+	width: 20px;
+	height: 20px;
+}
+#HeadersRoot {
+	width: 100%;
+	background-color: black;
+	height: 40px;
+	flow-children: right;
+}
+.EG_Header {
+	vertical-align: bottom;
+	text-align: center;
+	margin-left: 1px;
+	font-size: 13px;
+	color: #90999b;
+	text-transform: uppercase;
+	text-overflow: shrink;
+}
+.Team_2 #HeadersRoot {
+	border-bottom: 1px solid #4a9820;
+}
+.Team_3 #HeadersRoot {
+	border-bottom: 1px solid #a52500;
+}
+#EG_TeamName {
+	font-size: 24px;
+	text-transform: uppercase;
+	font-weight: lighter;
+	width: 228px;
+	vertical-align: bottom;
+	padding-left: 2px;
+}
+.AspectRatio4x3 #EG_TeamName {
+	width: 226px;
+}
+.Team_2 #EG_TeamName {
+	color: #4a9820;
+}
+.Team_3 #EG_TeamName {
+	color: #a52500;
+}
+#EG_Buttons {
+	width: 100%;
+}
+.EG_BottomButton {
+	background-color: #121618;
+	border: 3px solid #4d5051;
+	margin-top: 10px;
+	horizontal-align: right;
+	vertical-align: bottom;
+	width: 200px;
+}
+#ShowChatButton {
+	horizontal-align: center;
+}
+
+.EG_BottomButton:hover {
+	border: 3px solid #d4d4d4;
+}
+.EG_BottomButton:active {
+	brightness: 0.5;
+}
+.EG_BottomButton Label {
+	horizontal-align: center;
+	vertical-align: center;
+	color: #6f6f6f;
+	text-transform: uppercase;
+}
+
+.EG_BottomButton:hover Label {
+	color: #d4d4d4;
+}
+#EG_ShowChat {
+	horizontal-align: center;
+}
+
+#EG_VictoryLabel {
+	width: 100%;
+	height: 100%;
+	font-size: 64px;
+	color: #cccccc;
+	text-transform: uppercase;
+	background-color: black;
+	text-align: right;
+	text-overflow: shrink;
+	padding-right: 50px;
+}
+#EG_TopPanel {
+	height: 65px;
+	width: 100%;
+}
+
+#EG_TopClose {
+	width: 24px;
+	height: 24px;
+	background-image: url("file://{resources}/images/custom_game/import_dota/x_close_png.png");
+	background-size: 100%;
+	margin: 10px;
+	horizontal-align: right;
+}
+#EG_TopClose:hover {
+	wash-color: #cccccc;
+}
+#EG_TopClose:active {
+	wash-color: white;
+	pre-transform-scale2d: 0.9;
+}
+
+.LocalPlayer Label {
+	font-weight: bold;
+	color: white;
+}

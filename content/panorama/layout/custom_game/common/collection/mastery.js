@@ -101,11 +101,13 @@ class Mastery {
 		}
 		EQUIPPED_MASTERY = this;
 		EQUIPPED_MASTERY.panel.SetHasClass("Equipped", true);
-		this.panel
-			.FindChildTraverse("MasteryParticleRoot1")
-			.BCreateChildren(
-				'<DOTAScenePanel class="EquippedMasteryParticle" camera="camera_common" particleonly="false" map="collection/spin_glow" hittest="false"/>',
-			);
+		$.CreatePanelWithProperties(`DOTAScenePanel`, this.panel.FindChildTraverse("MasteryParticleRoot1"), "", {
+			class: `EquippedMasteryParticle`,
+			camera: `camera_common`,
+			particleonly: `false`,
+			map: `collection/spin_glow`,
+			hittest: `false`,
+		});
 		this.equipped = true;
 		MinimapMasteryButtonAction(true, this.image, this.name);
 		SetMinimapMasteryHintVisible(false);
@@ -387,8 +389,8 @@ function MinimapButtonAction() {
 
 (function () {
 	if (MAP_NAME == "dota") return;
-	GameEvents.Subscribe("masteries:update_masteries", UpdatePlayerMasteries);
-	GameEvents.Subscribe("masteries:update_fortune", UpdateFortune);
-	GameEvents.Subscribe("masteries:equip_mastery", EquipMastery);
-	GameEvents.Subscribe("masteries:take_off_mastery", TakeOffMastery);
+	GameEvents.SubscribeProtected("masteries:update_masteries", UpdatePlayerMasteries);
+	GameEvents.SubscribeProtected("masteries:update_fortune", UpdateFortune);
+	GameEvents.SubscribeProtected("masteries:equip_mastery", EquipMastery);
+	GameEvents.SubscribeProtected("masteries:take_off_mastery", TakeOffMastery);
 })();

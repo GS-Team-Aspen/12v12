@@ -49,17 +49,13 @@ function StopWheel() {
 		$("#PhrasesContainer").RemoveAndDeleteChildren();
 		for (let i = 0; i < 8; i++) {
 			if (rings[0][0][i] != "#dota_chatwheel_label_skywrath_mage_4") {
-				$("#PhrasesContainer").BCreateChildren(
-					"<Button id='Phrase" +
-						i +
-						"' class='MyPhrases' onmouseactivate='OnSelect(" +
-						i +
-						")' onmouseover='OnMouseOver(" +
-						i +
-						")' onmouseout='OnMouseOut(" +
-						i +
-						")' />",
-				); //class='Phrase HasSound RequiresHeroBadgeTier BronzeTier'
+				$.CreatePanelWithProperties(`Button`, $("#PhrasesContainer"), `Phrase${i}`, {
+					class: `MyPhrases`,
+					onmouseactivate: `OnSelect(${i})`,
+					onmouseover: `OnMouseOver(${i})`,
+					onmouseout: `OnMouseOut(${i})`,
+				});
+
 				$("#Phrase" + i).BLoadLayoutSnippet("Phrase");
 				$("#Phrase" + i)
 					.GetChild(0)
@@ -81,23 +77,19 @@ function OnSelect(num) {
 		$("#PhrasesContainer").RemoveAndDeleteChildren();
 		for (let i = 0; i < 8; i++) {
 			if (rings[newnum][0][i] != "#dota_chatwheel_label_skywrath_mage_4") {
-				let dopstr = "";
+				let properities_for_panel = {
+					class: `MyPhrases`,
+					onmouseactivate: `OnSelect(${i})`,
+					onmouseover: `OnMouseOver(${i})`,
+					onmouseout: `OnMouseOut(${i})`,
+				};
+
 				if (rings[newnum][1][i]) {
-					dopstr = " oncontextmenu='AddOnFavourites(" + i + ")'";
+					properities_for_panel.oncontextmenu = `AddOnFavourites(${i})`;
 				}
-				$("#PhrasesContainer").BCreateChildren(
-					"<Button id='Phrase" +
-						i +
-						"' class='MyPhrases' onmouseactivate='OnSelect(" +
-						i +
-						")' onmouseover='OnMouseOver(" +
-						i +
-						")' onmouseout='OnMouseOut(" +
-						i +
-						")'" +
-						dopstr +
-						" />",
-				); //class='Phrase HasSound RequiresHeroBadgeTier BronzeTier'
+
+				$.CreatePanelWithProperties(`Button`, $("#PhrasesContainer"), `Phrase${i}`, properities_for_panel);
+
 				$("#Phrase" + i).BLoadLayoutSnippet("Phrase");
 				$("#Phrase" + i)
 					.GetChild(0)
@@ -177,7 +169,11 @@ function OnMouseOut() {
 	$("#Arrow").AddClass("Hidden");
 	$("#WHTooltip").visible = false;
 }
-
+function EmitSoundFromServer(data) {
+	const sound_name = data.sound;
+	if (sound_name == undefined) return;
+	Game.EmitSound(sound_name);
+}
 (function () {
 	GameUI.CustomUIConfig().chatWheelLoaded = true;
 
@@ -189,17 +185,13 @@ function OnMouseOut() {
 	});
 
 	for (let i = 0; i < 8; i++) {
-		$("#PhrasesContainer").BCreateChildren(
-			"<Button id='Phrase" +
-				i +
-				"' class='MyPhrases' onmouseactivate='OnSelect(" +
-				i +
-				")' onmouseover='OnMouseOver(" +
-				i +
-				")' onmouseout='OnMouseOut(" +
-				i +
-				")' />",
-		);
+		$.CreatePanelWithProperties(`Button`, $("#PhrasesContainer"), `Phrase${i}`, {
+			class: `MyPhrases`,
+			onmouseactivate: `OnSelect(${i})`,
+			onmouseover: `OnMouseOver(${i})`,
+			onmouseout: `OnMouseOut(${i})`,
+		});
+
 		$("#Phrase" + i).BLoadLayoutSnippet("Phrase");
 		$("#Phrase" + i)
 			.GetChild(0)
@@ -214,4 +206,5 @@ function OnMouseOut() {
 	$("#Bubble").visible = false;
 	$("#PhrasesContainer").visible = false;
 	$("#WHTooltip").visible = false;
+	GameEvents.SubscribeProtected("chat_wheel:emit_sound", EmitSoundFromServer);
 })();

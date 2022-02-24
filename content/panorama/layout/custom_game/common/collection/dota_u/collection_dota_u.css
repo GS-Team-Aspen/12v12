@@ -4,7 +4,7 @@
 	tooltip-position: bottom;
 	visibility: collapse;
 	wash-color: #cdf;
-	margin-left: -40px;
+	margin-left: -80px;
 	margin-top: 40px;
 }
 
@@ -15,7 +15,19 @@
 	wash-color: #cdf;
 	z-index: -10;
 	margin-top: 80px;
-	margin-left: -40px;
+	margin-left: -37px;
+}
+#GitButton {
+	background-size: 38px 38px;
+	background-image: url("file://{resources}/images/custom_game/github_base.png");
+	tooltip-position: left;
+	wash-color: #cdf;
+	z-index: -10;
+	margin-top: 80px;
+	margin-left: -18px;
+}
+.IsLocalPlayerSpectating #GitButton {
+	margin-left: -3px;
 }
 
 #MasteryButtonTooltip,
@@ -26,4 +38,45 @@
 #ShopFortuneButtonRoot,
 .OfferFortune {
 	visibility: collapse;
+}
+
+#GitOptions {
+	width: 120px;
+	flow-children: down;
+	padding-top: -2px;
+	background-color: #1e1e26;
+	border: 1px solid #7f8aa1;
+	margin: 122px 0px 0px 161px;
+	transition: opacity 0.1s ease-in-out 0s;
+	opacity: 0;
+}
+#GitOptions.Show {
+	opacity: 1;
+}
+
+#GitOptions Button {
+	background-color: gradient(linear, 0% 120%, 0% 0%, from(#363b46), to(#5c5d62));
+	background-color: #15151d;
+	width: 100%;
+	padding: 2px 10px;
+	margin-top: 2px;
+	horizontal-align: center;
+	border: 1px solid #474a6e;
+	transition: background-color 0.1s ease-in-out 0s;
+}
+#GitOptions Button:hover {
+	background-color: gradient(linear, 0% 120%, 0% 0%, from(#454c5a), to(#696a70));
+	background-color: #272733;
+}
+#GitOptions Button:hover Label {
+	color: gradient(linear, 0% 100%, 0% 0%, from(#e28a2e), to(#fcd065));
+}
+#GitOptions Label {
+	horizontal-align: center;
+	text-align: center;
+	font-size: 14px;
+	font-weight: semi-bold;
+	color: gradient(linear, 0% 120%, 0% 0%, from(#ccddff), to(#e6e8ef));
+	transition: color 0.1s ease-in-out 0s;
+	text-shadow: black 0px 0px 2px 2;
 }

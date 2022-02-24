@@ -114,7 +114,6 @@ function BP_Inventory:OnDataArrival(players_inventories, equipped_items)
 	BP_Inventory.equipped_items = equipped_items
 	for steam_id, items in pairs(players_inventories) do
 		BP_Inventory:UpdateLocalItems(steam_id)
-		BP_Inventory:ProcessPlayerItems(steam_id, items)
 	end
 end
 
@@ -149,32 +148,21 @@ function BP_Inventory:UpdateLocalItems(steam_id)
 	end
 end
 
-function BP_Inventory:ProcessPlayerItems(steam_id, items)
-	for i, item in pairs(items) do
-		item.id = nil
-		local definition = self.item_definitions[item.itemName]
-		if definition then
-			item.ID = definition.ID
-			item.rarity = self.rarities[definition.Rarity]
-			item.category = self.categories[definition.Category]
-		end
-		--print("[" .. i .. "] <"..steam_id.."> has item:")
-		--table.print(item)
-	end
-end
-
 function BP_Inventory:UpdateLocalPlayerInfo(playerId)
 	BP_PlayerProgress:UpdatePlayerInfo(playerId)
 	self:UpdateAvailableItems(playerId)
 	local steamId = Battlepass:GetSteamId(playerId)
 	if not self.equipped_items[steamId] then return end
+	local b_had_equipped_items = false
 	for category, itemsList in pairs(self.equipped_items[steamId]) do
 		if not (category == "id") and not (category == "steamId") and not (category == "equippedMasteries") then
 			for _, itemName in pairs(itemsList) do
-				self:EquipItem({PlayerID = Battlepass.playerid_map[steamId], itemName = itemName, skipSave = true})
+				b_had_equipped_items = true
+				self:EquipItem({PlayerID = Battlepass.playerid_map[steamId], item_name = itemName, skipSave = true, b_init = true})
 			end
 		end
 	end
+	if b_had_equipped_items then BP_Inventory:UpdateEquippedItems(playerId) end
 end
 
 function BP_Inventory:UpdateAvailableItems(playerId)
@@ -273,33 +261,33 @@ function BP_Inventory:GetItemsPoolForPlayer(playerId, treasureName)
 	return { backPool = backPool, poolForWheel = poolForWheel }
 end
 
-function BP_Inventory:OpenTreasure(data) 
+function BP_Inventory:OpenTreasure(data)
 	local playerSteamId = Battlepass:GetSteamId(data.PlayerID)
 	local itemInInventory = self:IsItemOwned(data.treasureName, playerSteamId)
 	if not itemInInventory then return end
-	
+
 	if data.treasureName == "gift_free_treasure" then
-		if WebApi.playerSettings[data.PlayerID] and WebApi.playerSettings[data.PlayerID].got_free_treasure then
+		if WebApi.player_settings[data.PlayerID] and WebApi.player_settings[data.PlayerID].got_free_treasure then
 			return
 		else
-			WebApi.playerSettings[data.PlayerID].got_free_treasure = true
+			WebApi.player_settings[data.PlayerID].got_free_treasure = true
 			WebApi:ForceSaveSettings(data.PlayerID)
-			CustomNetTables:SetTableValue("player_settings", tostring(data.PlayerID), WebApi.playerSettings[data.PlayerID])
+			CustomNetTables:SetTableValue("player_settings", tostring(data.PlayerID), WebApi.player_settings[data.PlayerID])
 		end
 	end
-	
+
 	local items = self:GetItemsPoolForPlayer(data.PlayerID, data.treasureName)
 	local item = table.random(items.backPool);
 	--print("items.backPool")
 	--DeepPrintTable(items.backPool)
 	local isPlayerAlreadyHasItem = self:IsItemOwned(item, playerSteamId)
-	
+
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(data.PlayerID), "battlepass_inventory:show_wheel", {
 		itemPool = items.poolForWheel,
 		itemPrize = item;
 		glory = isPlayerAlreadyHasItem and (self.item_definitions[item].GloryForDuplicate or self.duplicate_glory[self.item_definitions[item].Rarity]) or 0
 	})
-	
+
 	local count = itemInInventory[2].count - 1
 	local responseData = {
 		items = {
@@ -316,7 +304,7 @@ function BP_Inventory:OpenTreasure(data)
 	else
 		self:RemoveItems(responseData)
 	end
-	
+
 	if not self.item_definitions[item].NotAddInInventory then
 		if not isPlayerAlreadyHasItem then
 			BP_Inventory:AddItems({
@@ -345,7 +333,7 @@ function BP_Inventory:OpenTreasure(data)
 			glory = value,
 		})
 	end
-	
+
 	BP_Inventory:ChangeLocalItemCount(data.treasureName, playerSteamId, -1)
 end
 
@@ -384,7 +372,7 @@ end
 
 function BP_Inventory:RemoveItems(items)
 	WebApi:Send(
-		"battlepass/inventory/remove_items", 
+		"battlepass/inventory/remove_items",
 		items,
 		function(data)
 			print("Successfully removed items")
@@ -398,7 +386,7 @@ end
 
 function BP_Inventory:UpdatePlayerItems(items)
 	WebApi:Send(
-		"battlepass/inventory/set_items", 
+		"battlepass/inventory/set_items",
 		items,
 		function(data)
 			print("Successfully updated items")
@@ -462,10 +450,13 @@ function BP_Inventory:AddItemLocal(itemName, playerSteamId, count)
 end
 
 function BP_Inventory:BuyItems(_data)
-	if BP_Inventory.item_definitions[_data.itemName] and BP_Inventory.item_definitions[_data.itemName].Source.Coins then
+	local itemsCount = _data.count
+	itemsCount = tonumber(itemsCount)
+	if not itemsCount or itemsCount <= 0 then return end
+
+	if _data.itemName and BP_Inventory.item_definitions[_data.itemName] and BP_Inventory.item_definitions[_data.itemName].Source.Coins then
 		local cost = BP_Inventory.item_definitions[_data.itemName].Source.Coins
 		local playerSteamId = Battlepass:GetSteamId(_data.PlayerID)
-		local itemsCount = _data.count or 1
 		local itemData = {
 			steamId = playerSteamId,
 			items = {
@@ -476,7 +467,7 @@ function BP_Inventory:BuyItems(_data)
 			},
 			totalPrice = cost * itemsCount
 		}
-		
+
 		WebApi:Send(
 			"battlepass/inventory/buy_items",
 			itemData,
@@ -502,40 +493,55 @@ function BP_Inventory:BuyItems(_data)
 end
 
 function BP_Inventory:_CheckItemType(data)
-	if not self.item_definitions[data.itemName] then return end
-	return data.PlayerID, self.item_definitions[data.itemName].Category
+	if not self.item_definitions[data.item_name] then return end
+	return data.PlayerID, self.item_definitions[data.item_name].Category
 end
 
 function BP_Inventory:EquipItem(data)
 	local playerId, category = self:_CheckItemType(data)
 	if not category or not playerId then return end
+	if not self.categories[category] then return end
+	local steamId = Battlepass:GetSteamId(playerId)
+	if not steamId then return true end
+
 	local playerMMR = 1500
-	
+
 	if WebApi.player_ratings and WebApi.player_ratings[playerId] and WebApi.player_ratings[playerId][GetMapName()] then
 		playerMMR = WebApi.player_ratings[playerId][GetMapName()]
 	end
-	
+
+	local source = self.item_definitions[data.item_name].Source
+
 	local equipItemFilter = function(sourceName, value)
-		local source = self.item_definitions[data.itemName].Source
-		return source and source[sourceName] and value < source[sourceName]
+		if type(value) ~= "boolean" then
+			return source and source[sourceName] and value < source[sourceName]
+		else
+			return source and source[sourceName] and self:IsItemOwned(data.item_name, steamId) == nil
+		end
 	end
 	
-	if equipItemFilter("DOTAU_MMR", playerMMR) or equipItemFilter("SupporterState", Supporters:GetLevel(playerId)) then
-		data.skipSave = nil
-		self:TakeOffItem(data)
-		return 
-	end
-	
-	if WearFunc["Equip_"..category] then WearFunc["Equip_"..category](playerId, data.itemName) end
-	local steamId = Battlepass:GetSteamId(playerId)
+	WearFunc:EquipItemInCategory(playerId, self.categories[category], data.item_name)
+
 	if not self.equipped_items[steamId]["equipped"..category] then
 		self.equipped_items[steamId]["equipped"..category] = {}
 	end
-	if not table.contains(self.equipped_items[steamId]["equipped"..category], data.itemName) then
-		table.insert(self.equipped_items[steamId]["equipped"..category], data.itemName)
+	if not table.contains(self.equipped_items[steamId]["equipped"..category], data.item_name) then
+		table.insert(self.equipped_items[steamId]["equipped"..category], data.item_name)
 	end
-	
-	BP_Inventory:UpdateEquippedItems(playerId)
+
+	if  equipItemFilter("DOTAU_MMR", playerMMR) or
+		equipItemFilter("SupporterState", Supporters:GetLevel(playerId)) or
+		equipItemFilter("Treasure", true) or
+		equipItemFilter("Coins", true) or
+		equipItemFilter("Other", true) or
+		equipItemFilter("Money", true)
+	then
+		data.skipSave = nil
+		self:TakeOffItem(data)
+		return
+	end
+
+	if not data.b_init then BP_Inventory:UpdateEquippedItems(playerId) end
 	if not data.skipSave then self:SaveEquippedItems(playerId) end
 end
 
@@ -543,26 +549,29 @@ function BP_Inventory:TakeOffItem(data)
 	local playerId, category = self:_CheckItemType(data)
 	if not category then return end
 	
+	if not self.categories[category] then return end
+	
 	if PlayerResource:GetSelectedHeroEntity(data.PlayerID) then
-		if WearFunc["TakeOff_"..category] then WearFunc["TakeOff_"..category](playerId, data.itemName) end
-		table.remove_item(self.equipped_items[Battlepass:GetSteamId(playerId)]["equipped"..category], data.itemName)
-		BP_Inventory:UpdateEquippedItems(playerId)
+		WearFunc:TakeOffItemInCategory(playerId, self.categories[category], data.item_name)
+		table.remove_item(self.equipped_items[Battlepass:GetSteamId(playerId)]["equipped"..category], data.item_name)
+		if not data.b_init then BP_Inventory:UpdateEquippedItems(playerId) end
 	else
-		Timers:CreateTimer(1, function() 
+		Timers:CreateTimer(1, function()
 			self:TakeOffItem(data)
 			return nil
 		end)
 	end
+	
 	if not data.skipSave then self:SaveEquippedItems(playerId) end
 end
 
 function BP_Inventory:SaveOnlyEquippedItems(data)
 	local playerId = data.PlayerID
 	local state = toboolean(data.state)
-	if WebApi.playerSettings[playerId] then
-		WebApi.playerSettings[playerId].only_owned_items = state
+	if WebApi.player_settings[playerId] then
+		WebApi.player_settings[playerId].only_owned_items = state
 		WebApi:ScheduleUpdateSettings(playerId)
-	else 
+	else
 		Timers:CreateTimer(1, function()
 			BP_Inventory:SaveOnlyEquippedItems(data)
 			return nil
@@ -574,18 +583,27 @@ function BP_Inventory:InitBaseCollection(_data)
 	if not _data.PlayerID or  _data.PlayerID < 0 then return end
 	local playerId = _data.PlayerID
 	local hero = PlayerResource:GetSelectedHeroEntity(playerId)
-	if not hero or not IsValidEntity(hero) or not BP_Inventory.bCollectionLoaded then
+	local steamId = Battlepass:GetSteamId(playerId)
+	if not hero or not IsValidEntity(hero) or not BP_Inventory.bCollectionLoaded or not steamId then
 		Timers:CreateTimer(1, function()
 			BP_Inventory:InitBaseCollection(_data)
 		end)
 		return
 	end
+	
+	if not hero.dummy_caster then
+		if hero:IsControllableByAnyPlayer() then
+			Cosmetics:InitCosmeticForUnit(hero)
+		end
+	end
+
 	CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerId), "battlepass_inventory:init_collection", {
 		treasures = BP_Inventory.responseCollectionTreasures,
 		items = BP_Inventory.responseCollectionItems,
 		masteries = BP_Inventory.responseCollectionMasteries;
 	})
-	if not self.player_items[Battlepass.steamid_map[playerId]] then return end
+
+	if not self.player_items[steamId] then return end
 	BP_Inventory:UpdateLocalPlayerInfo(playerId)
 end
 

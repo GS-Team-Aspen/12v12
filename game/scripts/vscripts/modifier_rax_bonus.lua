@@ -11,6 +11,8 @@ end
 
 function modifier_rax_bonus:GetModifierConstantRespawnTime()
 	if IsServer() then
-		return raxBonuses[self:GetParent():GetTeam()] - raxBonuses[self:GetParent():GetOpposingTeamNumber()] or 0
+		local rax_bonus = raxBonuses[self:GetParent():GetTeam()] - raxBonuses[self:GetParent():GetOpposingTeamNumber()]
+	    if rax_bonus < 0 then rax_bonus = 0 end
+		return rax_bonus
 	end
 end

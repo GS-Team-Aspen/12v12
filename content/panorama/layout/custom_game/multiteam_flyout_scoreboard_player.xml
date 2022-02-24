@@ -1,18 +1,23 @@
 <root>
     <styles>
- 		<include src="file://{resources}/styles/dotastyles.css" />
+ 		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
 		<include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
         <include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
     </styles>
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+	</scripts>
 	<script>
+		var playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
+		
 		function ToggleMute()
 		{
-			var playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
 			if ( playerId !== -1 )
 			{
 				var newIsMuted = !Game.IsPlayerMuted( playerId );
 				Game.SetPlayerMuted( playerId, newIsMuted );
 				$.GetContextPanel().SetHasClass( "player_muted", newIsMuted );
+				$.GetContextPanel().custom_mute = newIsMuted;
 
 				GameEvents.SendCustomGameEventToServer("set_mute_player", { disable: newIsMuted, toPlayerId: playerId } );
 			}
@@ -20,7 +25,6 @@
 
 		function ToggleDisableHelp()
 		{
-			var playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
 			if ( playerId !== -1 )
 			{
 				var disable = $("#DisableHelpButton").checked;
@@ -30,7 +34,6 @@
 
 		function ChangeLeaveStatus(msg)
 		{
-			const playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
 			var playerName = $("#PlayerName");
 			if (playerId == msg.playerId){
 				if (msg.leave != undefined && msg.leave) {
@@ -45,7 +48,6 @@
 
 		function RefreshMuteAndDisableHelpList()
 		{
-			var playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
 			$.GetContextPanel().SetHasClass( "player_muted", Game.IsPlayerMuted( playerId ) );
 
 			var disableHelp = CustomNetTables.GetTableValue("disable_help", Players.GetLocalPlayer());
@@ -63,38 +65,51 @@
 
 		function ToggleMuteItem( event_data )
 		{
-			var playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
 			if (playerId == event_data["to"])
 			{
 				var newIsMuted = (event_data["mute"] == 1)
 				Game.SetPlayerMuted( playerId, newIsMuted );
 				$.GetContextPanel().SetHasClass( "player_muted", newIsMuted );
+				GameEvents.SendCustomGameEventToServer("set_mute_player", { disable: newIsMuted, toPlayerId: playerId } );
 			}
 		}
 
 		function ShowPlayerPerk( event_data )
 		{
-			var playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
 			if (playerId == event_data.playerId){
 				const perkImage = $("#PerkForPlayer");
-				perkImage.SetImage("file://{resources}/layout/custom_game/common/patreon/game_perk/icons/"+event_data.perkName+".png");
+				perkImage.SetImage("file://{resources}/layout/custom_game/common/game_perks/icons/"+event_data.perkName+".png");
 				perkImage.SetPanelEvent( "onmouseover", function() {
 					$.DispatchEvent( 'DOTAShowTextTooltip', perkImage, $.Localize("DOTA_Tooltip_"+event_data.perkName));
 				} )
 			}
 		}
-
-    	GameEvents.Subscribe("change_leave_status", ChangeLeaveStatus);
-		GameEvents.Subscribe("set_disable_help_refresh", RefreshMuteAndDisableHelpList);
-		GameEvents.Subscribe("set_mute_refresh", ToggleMuteItem);
-		GameEvents.Subscribe("show_player_perk", ShowPlayerPerk);
-
-		GameEvents.SendCustomGameEventToServer("check_perks_for_players", {} );
+		
+		var local_id = Game.GetLocalPlayerID();
+		$("#KickPlayer").visible = local_id != playerId && Players.GetTeam(local_id) == Players.GetTeam(playerId);
+		
+		function InitKickPlayer()
+		{
+			GameEvents.SendCustomGameEventToServer("ui_kick_player", { target_id: playerId } );
+		}
+		function SetPlayerPatreonLevel(data)
+		{
+			const kick_root = $("#KickPlayer");
+			if (kick_root) kick_root.SetHasClass("Show", data.supp_level > 0);
+		}
+		
+    	GameEvents.SubscribeProtected("change_leave_status", ChangeLeaveStatus);
+		GameEvents.SubscribeProtected("set_disable_help_refresh", RefreshMuteAndDisableHelpList);
+		GameEvents.SubscribeProtected("set_mute_refresh", ToggleMuteItem);
+		GameEvents.SubscribeProtected("game_perks:show_player_perk", ShowPlayerPerk);
+		GameEvents.SubscribeProtected("voting_for_kick:set_supp_level", SetPlayerPatreonLevel);
+		GameEvents.SendCustomGameEventToServer("voting_for_kick:get_supp_level", {});
 	</script>
 	<Panel class="PlayerRow">
 		<Panel id="PlayerRowContainer">
 			<Panel id="Hero" class="ScoreCol_Hero ScoreboardPanel">
 				<Image id="HeroIcon" heroimagestyle="landscape" scaling="stretch-to-fit-preserve-aspect" />
+				<Button id="KickPlayer" onactivate="InitKickPlayer()"/>
 			</Panel>
 			<Panel id="PlayerDetailsContainer" class="ScoreCol_PlayerDetails ScoreboardPanel">
 				<Label id="IsLeave"/>

@@ -1,4 +1,5 @@
 let bVotingIsNow = false;
+const report_button = $("#ReportButton");
 
 function VotingToKickShowVoting(data) {
 	$.Msg("SHOW VOTING");
@@ -24,11 +25,12 @@ function VotingToKickShowVoting(data) {
 		targetPlayer.player_name +
 		"</font>" +
 		" ?";
-	$("#VotingToKickModelPanel").BCreateChildren(
-		'<DOTAScenePanel hittest="false" id="VotingToKickVotingHeroModel" style="width:210px;height:210px;" unit="' +
-			targetPlayer.player_selected_hero +
-			'" particleonly="false"/>',
-	);
+
+	$.CreatePanelWithProperties(`DOTAScenePanel`, $("#VotingToKickModelPanel"), "VotingToKickVotingHeroModel", {
+		style: `width:210px;height:210px;`,
+		unit: `${targetPlayer.player_selected_hero}`,
+		particleonly: `false`,
+	});
 
 	$("#VotingToKickKDA").html = true;
 	$("#VotingToKickKDA").text =
@@ -40,19 +42,22 @@ function VotingToKickShowVoting(data) {
 		" / " +
 		Players.GetAssists(data.playerId);
 
-	if (Game.GetLocalPlayerID() != data.playerIdInit) {
-		$("#VotingToKickVotingYes").visible = true;
-		$("#VotingToKickVotingNo").visible = true;
-	} else {
-		$("#VotingToKickVotingYes").visible = false;
-		$("#VotingToKickVotingNo").visible = false;
-	}
+	const not_local_player = Game.GetLocalPlayerID() != data.playerIdInit;
+
+	$("#VotingToKickVotingYes").visible = not_local_player;
+	$("#VotingToKickVotingNo").visible = not_local_player;
+	report_button.visible = not_local_player;
 
 	if (data.playerVoted != null) {
 		$("#VotingToKickVotingYes").visible = false;
 		$("#VotingToKickVotingNo").visible = false;
 	}
 }
+// VotingToKickShowVoting({
+// 	playerIdInit: 1,
+// 	playerId: 0,
+// 	reason: "afk",
+// });
 
 function ToggleVotingPanel() {
 	$("#VotingToKickVoting").ToggleClass("Hide");
@@ -107,7 +112,7 @@ function VotingToKickShowReason(data) {
 
 	let reasonPanelHideText = $("#VotingToKickReasonHeadPanelText");
 	reasonPanelHideText.html = true;
-	let targetPlayer = Game.GetPlayerInfo(data.playerId);
+	let targetPlayer = Game.GetPlayerInfo(data.target_id);
 	reasonPanelHideText.text =
 		$.Localize("#voting_to_kick_choose_reason_tooltip") +
 		" " +
@@ -123,14 +128,18 @@ function VotingToKickDebugPrint(data) {
 	let playerVoted = Game.GetPlayerInfo(data.playerVotedId);
 	$.Msg(playerVoted.player_name + " VOTE: " + data.vote + "NEED TOTAL: " + data.total);
 }
+function ReportVoting() {
+	report_button.visible = false;
+	GameEvents.SendCustomGameEventToServer("voting_to_kick_report", {});
+}
 function VotingToKickInit() {
 	GameEvents.SendCustomGameEventToServer("voting_to_kick_check_voting_state", {});
-	GameEvents.Subscribe("voting_to_kick_show_reason", VotingToKickShowReason);
-	GameEvents.Subscribe("voting_to_kick_hide_reason", VotingToKickHideReason);
+	GameEvents.SubscribeProtected("voting_to_kick_show_reason", VotingToKickShowReason);
+	GameEvents.SubscribeProtected("voting_to_kick_hide_reason", VotingToKickHideReason);
 
-	GameEvents.Subscribe("voting_to_kick_show_voting", VotingToKickShowVoting);
-	GameEvents.Subscribe("voting_to_kick_hide_voting", VotingToKickHideVoting);
+	GameEvents.SubscribeProtected("voting_to_kick_show_voting", VotingToKickShowVoting);
+	GameEvents.SubscribeProtected("voting_to_kick_hide_voting", VotingToKickHideVoting);
 
-	GameEvents.Subscribe("voting_to_kick_debug_print", VotingToKickDebugPrint);
+	GameEvents.SubscribeProtected("voting_to_kick_debug_print", VotingToKickDebugPrint);
 }
 VotingToKickInit();

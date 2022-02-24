@@ -12,4 +12,9 @@
 	//	"Ability1"					"templar_assassin_refraction_holdout"		// Ability 1
 	//	"VisionNighttimeRange"		"1800"										// Range of vision at night time.
 	//}
+	
+	"npc_dota_hero_tinker"
+	{
+		"Ability6"		"tinker_rearm_custom"
+	}
 }

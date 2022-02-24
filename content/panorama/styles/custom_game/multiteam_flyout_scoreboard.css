@@ -6,10 +6,8 @@
 	vertical-align: top;
 	margin-top: 95px;
 	margin-left: 30px;
-	flow-children: down;
+	flow-children: right;
 	padding: 0px;
-	background-color: #666666cc;
-
 	transform: translatex(-670px);
 	transition-property: transform;
 	transition-duration: 0.2s;
@@ -17,6 +15,9 @@
 
 .FlyoutScoreboardRoot.flyout_scoreboard_visible {
 	transform: translatey(0px);
+}
+.FlyoutScoreboardRoot #TeamsContainer {
+	background-color: #666666cc;
 }
 
 #TeamsContainer {
@@ -98,7 +99,7 @@
 }
 
 .local_player_team #PlayersContainer {
-	box-shadow: fill #ffffff40 -3px -3px 3px 6px;
+	box-shadow: fill #ffffff40 0px 0px 6px 3px;
 }
 
 .TeamId {
@@ -244,7 +245,7 @@
 	background-size: 100%;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
-	background-image: url("s2r://panorama/images/custom_game/button_audio_on_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/button_audio_on_psd.png");
 	visibility: collapse;
 	opacity: 0.8;
 }
@@ -258,7 +259,7 @@
 }
 
 .player_muted #MuteButton {
-	background-image: url("s2r://panorama/images/custom_game/button_audio_off_psd.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/button_audio_off_psd_CUSTOM_NOT_DOTA.png");
 }
 
 #TeammateGoldAmount {
@@ -410,7 +411,7 @@
 	align: center center;
 }
 #PerkForPlayer {
-	background-image: url("s2r://panorama/images/items/emptyitembg_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/emptyitembg_png.png");
 	background-repeat: no-repeat;
 	background-size: 100% 99%;
 }
@@ -430,4 +431,46 @@
 	horizontal-align: right;
 	width: 54px;
 	text-align: center;
+}
+#MuteAll {
+	width: 25px;
+	height: 25px;
+	margin: 3px 0px 0px 4px;
+	background-image: url("s2r://panorama/images/custom_game/import_dota/button_audio_on_psd_png.vtex");
+	background-size: 100%;
+	img-shadow: #000000 0px 0px 3px 1px;
+	box-shadow: transparent 0px 0px 0px 0px;
+	background-color: transparent;
+	color: transparent;
+}
+#MuteAll .TickBox {
+	visibility: collapse;
+}
+#MuteAll:hover {
+	brightness: 1.5;
+}
+#MuteAll:active {
+	brightness: 1.1;
+}
+#MuteAll:selected {
+	background-image: url("s2r://panorama/images/custom_game/import_dota/button_audio_off_psd_CUSTOM_NOT_DOTA.png");
+}
+#KickPlayer {
+	width: 30px;
+	height: 30px;
+	background-image: url("s2r://panorama/images/compendium/international2020/icon_bounty_crosshair_shadow.png");
+	background-size: 100%;
+	wash-color: red;
+	opacity: 0;
+	margin-left: -8px;
+	margin-top: -8px;
+}
+#KickPlayer.Show {
+	opacity: 0.5;
+}
+#KickPlayer.Show:hover {
+	opacity: 1;
+}
+#KickPlayer.Show:active {
+	brightness: 2;
 }

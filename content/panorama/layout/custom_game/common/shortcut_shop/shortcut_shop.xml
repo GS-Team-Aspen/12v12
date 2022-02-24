@@ -1,0 +1,13 @@
+<root>
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+		<include src="file://{resources}/layout/custom_game/common/shortcut_shop/shortcut_shop.js" />
+	</scripts>
+
+	<styles>
+		<include src="file://{resources}/layout/custom_game/common/shortcut_shop/shortcut_shop.css" />
+	</styles>
+
+	<Panel class="shortcut_items" hittest="false">
+	</Panel>
+</root>

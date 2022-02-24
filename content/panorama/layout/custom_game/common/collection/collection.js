@@ -11,12 +11,14 @@ let stopWheelSchelude;
 let spinSound;
 let spinEndSound;
 let treasureGlowSchelude;
+let isGiftCode = false;
 
 let currentSorting = "default";
 let lastPreviewPanel = "";
 
 const treasuresPreviewRoot = $("#TreasuresPreviewRoot");
 const COLLECTION_DOTAU = $("#CollectionDotaU");
+const giftCodeChecker = $("#GiftCodePaymentFlag");
 
 function OpenTreasurePreview(treasureName) {
 	Game.EmitSound("ui.treasure_unlock.wav");
@@ -73,7 +75,7 @@ function _ChangeItemEquipState(itemName, equipState) {
 	Game.EmitSound(equipState ? "ui.inv_equip" : "ui.inv_unequip");
 	GameEvents.SendCustomGameEventToServer(
 		equipState ? "battlepass_inventory:equip_item" : "battlepass_inventory:take_off_item",
-		{ itemName: itemName },
+		{ item_name: itemName },
 	);
 }
 const ITEM_BUTTON_FUNCTIONS = {
@@ -97,10 +99,8 @@ const ITEM_BUTTON_FUNCTIONS = {
 
 function SetPaymentVisible(state) {
 	$("#CollectionPayment").SetHasClass("show", state);
-}
-
-function ParseBigNumber(x) {
-	return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
+	giftCodeChecker.SetSelected(false);
+	isGiftCode = false;
 }
 
 function ClickButton() {
@@ -151,6 +151,11 @@ function AddItemToAvailebleList(itemName, state, count) {
 	itemPanel.count = count;
 	if (itemPanel.season) itemPanel.visible = true;
 	itemPanel.FindChildTraverse("ItemActionButton").style.washColor = null;
+
+	if (itemPanel.sourceClassName == "Other") {
+		$(`#ItemType_${itemPanel.category}`).AddClass("NotOtherOnly");
+	}
+
 	const itemPreviewPanel = $("#ItemPreview_" + itemName);
 	if (!itemPreviewPanel) return;
 	itemPreviewPanel.RemoveClass("BW");
@@ -229,6 +234,9 @@ function SetItemToNotAvailebleList(itemName) {
 	}
 
 	item.sourceClassName = sourceClassName;
+	if (sourceClassName != "Other") {
+		$(`#ItemType_${item.category}`).AddClass("NotOtherOnly");
+	}
 	item.AddClass(sourceClassName);
 
 	const itemCountText = item.FindChildTraverse("ItemCount");
@@ -259,7 +267,7 @@ function UpdatePlayerItems(data) {
 		.Children()
 		.forEach((panel, index) => {
 			const tabPanel = $("#ItemsTypesList").GetChild(index);
-			tabPanel.SetHasClass("IsHasAvailbleItems", index < 2);
+			tabPanel.SetHasClass("IsHasAvailbleItems", PERMANENT_SHOW_TYPES.indexOf(ITEMS_TYPES[index]) > -1);
 			const itemParent = panel.FindChildTraverse("Items");
 			const items = itemParent.Children();
 			for (const item of items) {
@@ -350,14 +358,17 @@ function ShowBoostInfo(boostName) {
 	$("#" + boostName).SetHasClass("Active", true);
 }
 
+const GIFT_CODE_CHECKER = $("#GiftCodePaymentFlag");
 function _CreatePurchaseAccess(name, imagePath, headerKey, descKey, price) {
 	$("#PatreonPaymentButton").visible = name == "base_booster" || name == "golden_booster";
 	$("#PurchasingHeader").text = $.Localize("#" + headerKey);
 	$("#PurchasingDescription").text = $.Localize("#" + descKey);
+	GIFT_CODE_CHECKER.visible = true;
 	let priceValue = 0;
 	let newPayment = name;
 	if (PAYMENT_VALUES[name]) {
 		if (PAYMENT_VALUES[name].price) priceValue = PAYMENT_VALUES[name].price;
+		if (PAYMENT_VALUES[name].no_gifteable) GIFT_CODE_CHECKER.visible = false;
 	} else if ($("#Item_" + name) != undefined) {
 		newPayment = "purchase_" + name;
 		priceValue = Math.round($("#Item_" + name).sourceValue * 100) / 100;
@@ -367,6 +378,7 @@ function _CreatePurchaseAccess(name, imagePath, headerKey, descKey, price) {
 	$("#Price").SetDialogVariable("price", GetLocalPrice(priceValue));
 	$("#Price").SetDialogVariable("paySymbol", $.Localize("#paySymbol"));
 	$("#PurchasingIcon").SetImage(imagePath);
+
 	SetPaymentVisible(true);
 }
 
@@ -524,13 +536,19 @@ function InitCollection(_data) {
 			if (isTreasureType) {
 				const previewPanel = $.CreatePanel("Panel", treasuresPreviewRoot, "TreasurePreview_" + itemName);
 				previewPanel.BLoadLayoutSnippet("TreasuresPreviewWrap");
-				previewPanel
-					.FindChildTraverse("PreviewParticleRoot")
-					.BCreateChildren(
-						'<DOTAScenePanel style="width:100%;height:100%;" camera="camera_' +
-							rarityName +
-							'" particleonly="false" map="collection/spin_glow" hittest="false"/>',
-					);
+				$.CreatePanelWithProperties(
+					`DOTAScenePanel`,
+					previewPanel.FindChildTraverse(`PreviewParticleRoot`),
+					"",
+					{
+						style: `width:100%;height:100%;`,
+						camera: `camera_${rarityName}`,
+						particleonly: `false`,
+						map: `collection/spin_glow`,
+						hittest: `false`,
+					},
+				);
+
 				previewPanel.FindChildTraverse("TreasureName").text = $.Localize("#treasure_preview_header")
 					.replace("##treasure##", $.Localize(itemName))
 					.toUpperCase();
@@ -994,16 +1012,20 @@ function SelectSprays() {
 	SelectItemType("Sprays");
 }
 
+function OpenGiftCodes() {
+	FindDotaHudElement("GiftCodes_PanelWrap").SetHasClass("Show", true);
+}
+
 (function () {
 	GameEvents.SendCustomGameEventToServer("battlepass_inventory:get_collection", {});
-	GameEvents.Subscribe("battlepass_inventory:init_collection", InitCollection);
-	GameEvents.Subscribe("battlepass_inventory:update_player_info", UpdatePlayerInfo);
-	GameEvents.Subscribe("battlepass_inventory:update_player_items", UpdatePlayerItems);
-	GameEvents.Subscribe("battlepass_inventory:update_equipped_items", UpdateEquippedItems);
-	GameEvents.Subscribe("battlepass_inventory:update_coins", UpdateCoins);
-	GameEvents.Subscribe("battlepass_inventory:show_wheel", ShowWheel);
-	GameEvents.Subscribe("battlepass_inventory:select_sprays", SelectSprays);
-	GameEvents.Subscribe("battlepass_inventory:open_specific_collection", OpenSpecificCollection);
+	GameEvents.SubscribeProtected("battlepass_inventory:init_collection", InitCollection);
+	GameEvents.SubscribeProtected("battlepass_inventory:update_player_info", UpdatePlayerInfo);
+	GameEvents.SubscribeProtected("battlepass_inventory:update_player_items", UpdatePlayerItems);
+	GameEvents.SubscribeProtected("battlepass_inventory:update_equipped_items", UpdateEquippedItems);
+	GameEvents.SubscribeProtected("battlepass_inventory:update_coins", UpdateCoins);
+	GameEvents.SubscribeProtected("battlepass_inventory:show_wheel", ShowWheel);
+	GameEvents.SubscribeProtected("battlepass_inventory:select_sprays", SelectSprays);
+	GameEvents.SubscribeProtected("battlepass_inventory:open_specific_collection", OpenSpecificCollection);
 	SubscribeToNetTableKey("player_settings", Game.GetLocalPlayerID().toString(), SettingsFromSaved);
 	COLLECTION_DOTAU.AddClass(MAP_NAME);
 })();

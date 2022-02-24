@@ -26,7 +26,7 @@ function createEventRequestCreator(eventName) {
 		var id = ++idCounter;
 		data.id = id;
 		GameEvents.SendCustomGameEventToServer(eventName, data);
-		var listener = GameEvents.Subscribe(eventName, function (data) {
+		var listener = GameEvents.SubscribeProtected(eventName, function (data) {
 			if (data.id !== id) return;
 			GameEvents.Unsubscribe(listener);
 			callback(data);
@@ -87,8 +87,8 @@ const CENTER_SCREEN_MENUS = ["CollectionDotaU"];
 function ToggleMenu(name) {
 	FindDotaHudElement(name).ToggleClass("show");
 	if (name == "CollectionDotaU") {
-		if (glowSchelude != null) {
-			$.CancelScheduled(glowSchelude);
+		if (glowSchelude) {
+			glowSchelude = $.CancelScheduled(glowSchelude);
 		}
 		const glowPanel = FindDotaHudElement("DonateFocus");
 		glowPanel.SetHasClass("show", boostGlow);
@@ -102,3 +102,53 @@ function ToggleMenu(name) {
 		if (panelName != name) FindDotaHudElement(panelName).SetHasClass("show", false);
 	});
 }
+
+function _GetVarFromUniquePortraitsData(player_id, hero_name, path) {
+	const unique_portraits = CustomNetTables.GetTableValue("game_state", "portraits");
+	if (unique_portraits && unique_portraits[player_id]) {
+		return `${path}${unique_portraits[player_id]}.png`;
+	} else {
+		return `${path}${hero_name}.png`;
+	}
+}
+
+function GetPortraitImage(player_id, hero_name) {
+	return _GetVarFromUniquePortraitsData(player_id, hero_name, "file://{images}/heroes/");
+}
+function GetPortraitIcon(player_id, hero_name) {
+	return _GetVarFromUniquePortraitsData(player_id, hero_name, "file://{images}/heroes/icons/");
+}
+
+function GetHEXPlayerColor(player_id) {
+	var player_color = Players.GetPlayerColor(player_id).toString(16);
+	return player_color == null
+		? "#000000"
+		: "#" +
+				player_color.substring(6, 8) +
+				player_color.substring(4, 6) +
+				player_color.substring(2, 4) +
+				player_color.substring(0, 2);
+}
+function LocalizeWithValues(line, kv) {
+	let result = $.Localize(line);
+	Object.entries(kv).forEach(([k, v]) => {
+		result = result.replace(`%%${k}%%`, v);
+	});
+	return result;
+}
+function GetModifierStackCount(unit_index, m_name) {
+	for (var i = 0; i < Entities.GetNumBuffs(unit_index); i++) {
+		var buff_name = Buffs.GetName(unit_index, Entities.GetBuff(unit_index, i));
+		if (buff_name == m_name) {
+			return Buffs.GetStackCount(unit_index, Entities.GetBuff(unit_index, i));
+		}
+	}
+}
+
+function ParseBigNumber(x) {
+	return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "0";
+}
+
+Math.clamp = function (num, min, max) {
+	return this.min(this.max(num, min), max);
+};

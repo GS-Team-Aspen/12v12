@@ -109,6 +109,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"30000"
 		"BaseClass"						"luna_moon_glaive"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
@@ -132,6 +133,8 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction_percent"	"10"
+				"LinkedSpecialBonus"			"special_bonus_unique_luna_7"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_SUBTRACT"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
@@ -142,7 +145,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ursa_fury_swipes"
+		"ID"							"30001"
+		"BaseClass"						"ursa_fury_swipes"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
@@ -173,35 +177,9 @@
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
 	}
 
-	"chaos_knight_phantasm"
-	{
-		"AbilitySpecial"
-		{
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"15"
-				"LinkedSpecialBonus"		"special_bonus_unique_chaos_knight_4"
-			}
-		}
-	}
-	"special_bonus_unique_chaos_knight_4"
-	{
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"value"						"4"
-				"ad_linked_ability"			"chaos_knight_phantasm"				// this is the ability this bonus affects.  This line is required for Ability Draft to correctly choose talents.
-			}
-		}
-	}
-
 	"high_five_custom"
 	{
+		"ID"							"30002"
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"heroes/high_five_custom"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
@@ -245,6 +223,7 @@
 
 	"default_cosmetic_ability"
 	{
+		"ID"							"30003"
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"common/battlepass/default_cosmetic_ability"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
@@ -258,6 +237,7 @@
 
 	"spray_custom"
 	{
+		"ID"							"30004"
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"heroes/spray_custom"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
@@ -269,4 +249,59 @@
 		"AbilityDamage"					"0"
 		"AbilityManaCost"				"0"
 	}
+	
+	"delayed_damage_perk"
+	{
+		"ID"							"30005"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"perkIcons/delayed_damage"
+		"ScriptFile"					"common/game_perks/modifier_lib/delayed_damage"
+	}
+
+	"tinker_keen_teleport"
+	{
+		"LinkedAbility"					"tinker_rearm_custom"
+		"AbilityDraftPreAbility"		"tinker_rearm_custom"
+	}
+	
+	"tinker_rearm_custom"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"					"30006"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"				"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilitySound"					"Hero_Tinker.Rearm"
+		"LinkedAbility"					"tinker_keen_teleport"
+		"AbilityDraftPreAbility"		"tinker_keen_teleport"
+		"ScriptFile"					"heroes/tinker/tinker_rearm_custom"
+		"AbilityTextureName"				"tinker_rearm"
+
+		"AbilityDraftUltShardAbility"		"tinker_march_of_the_machines"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityChannelTime"			"3.5 2.0 1.25"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityChannelAnimation"		"ACT_DOTA_CHANNEL_ABILITY_4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 225 300"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		}
+	}
+	
+	//NEXT ID 30006
 }

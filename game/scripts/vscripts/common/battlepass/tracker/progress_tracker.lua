@@ -44,15 +44,8 @@ function ProgressTracker:Init()
 	}
 
 	-- entity used to listen to modifier events, to propagate them later
-	ProgressTracker.thinker = CreateModifierThinker(
-		nil,
-		nil,
-		"modifier_tracker_dummy",
-		nil,
-		Vector(0, 0, 0),
-		DOTA_TEAM_NEUTRALS,
-		false
-	)
+	ProgressTracker.thinker = CreateUnitByName("npc_dota_thinker", Vector(0,0,0), false, nil, nil, DOTA_TEAM_NEUTRALS)
+	ProgressTracker.thinker:AddNewModifier(nil, nil, "modifier_tracker_dummy", nil)
 end
 
 function ProgressTracker:ParseKvToNumber(str)

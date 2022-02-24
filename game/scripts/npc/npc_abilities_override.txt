@@ -70,39 +70,37 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"int_steal"				"2"
+				"int_steal"				"1 1 2 2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"int_steal_duration"	"10 20 30 40"
+				"int_steal_duration"	"15 20 25 30"
 			}
 		}
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 	}
 
-	//=================================================================================================================
-	// Ability: Bloodseeker's Thirst
-	//=================================================================================================================
-	"bloodseeker_thirst"
+	"special_bonus_unique_silencer_2"
 	{
 		"AbilitySpecial"
 		{
-			"02"
+			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed"		"6 12 18 24"
-				"LinkedSpecialBonus"		"special_bonus_unique_bloodseeker_4"
+				"value"						"1"
+				"ad_linked_ability"			"silencer_glaives_of_wisdom"
 			}
 		}
 	}
+
 	//=================================================================================================================
 	// Sentry Ward
 	//=================================================================================================================
 	"item_ward_sentry"
 	{
 		"ItemCost"						"50"
-		"ItemStockTime"					"60.0"
+		"ItemStockTime"					"45.0"
 	}
 	//=================================================================================================================
 	// Dust
@@ -118,5 +116,43 @@
 	"item_gem"
 	{
 		"ItemStockTime"					"300.0"
+	}
+
+	//=================================================================================================================
+	// Ability: Elder Titan's Astral Spirit
+	//=================================================================================================================
+	"elder_titan_ancestral_spirit"
+	{
+		"AbilitySpecial"
+		{
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_heroes"					"15 30 45 60"
+				"LinkedSpecialBonus"			"special_bonus_unique_elder_titan"
+				"CalculateSpellDamageTooltip"	"0"
+			}
+			"30"	//scepter_magic_immune_per_hero
+			{
+				"var_type"						"FIELD_FLOAT"
+				"scepter_magic_immune_per_hero_new_value"	"1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Mirana's Moonlight Shadow
+	//=================================================================================================================
+	"mirana_invis"
+	{
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15.0"
+				"LinkedSpecialBonus"	"special_bonus_unique_mirana_5"
+			}
+		}
 	}
 }

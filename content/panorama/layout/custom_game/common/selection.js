@@ -57,7 +57,7 @@ function GetSelectedEntities(msg) {
 }
 
 (function () {
-    GameEvents.Subscribe( "selection_new", Selection_New);
-    GameEvents.Subscribe( "selection_add", Selection_Add);
-    GameEvents.Subscribe( "selection_remove", Selection_Remove);
+    GameEvents.SubscribeProtected( "selection_new", Selection_New);
+    GameEvents.SubscribeProtected( "selection_add", Selection_Add);
+    GameEvents.SubscribeProtected( "selection_remove", Selection_Remove);
 })();

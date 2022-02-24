@@ -1,0 +1,125 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
+		<include src="file://{resources}/layout/custom_game/end_screen/end_screen.css"/>
+		<include src="file://{resources}/layout/custom_game/common/styles/dotau_styles.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+		<include src="file://{resources}/layout/custom_game/end_screen/end_screen.js"/>
+	</scripts>
+
+	<snippets>
+		<snippet name="EG_Team">
+			<Panel class="EG_Team">
+				<Panel id="HeadersRoot">
+					<Label id="EG_TeamName" text="#DOTA_GoodGuys"/>
+					<Label id="Col_Kills" class="EG_Header" text="#custom_end_screen_legend_kills"/>
+					<Label id="Col_Deaths" class="EG_Header" text="#custom_end_screen_legend_deaths"/>
+					<Label id="Col_Assists" class="EG_Header" text="#custom_end_screen_legend_assists"/>
+					<Label id="Col_Items" class="EG_Header" text="#custom_end_screen_legend_items"/>
+					<Label id="Col_StatusEffects" class="EG_Header" text="#custom_end_screen_status_effects"/>
+					<Label id="Col_Perk" class="EG_Header" text="#custom_end_screen_perk"/>
+					<Label id="Col_Networth" class="EG_Header" text="#custom_end_networth"/>
+					<Label id="Col_Gpm" class="EG_Header" text="#custom_end_gpm"/>
+					<Label id="Col_Xpm" class="EG_Header" text="#custom_end_xpm"/>
+					<Label id="Col_BuildingDamage" class="EG_Header" text="#custom_end_builing_damage"/>
+					<Label id="Col_HeroDamage" class="EG_Header" text="#custom_end_hero_damage"/>
+					<Label id="Col_DamageTaken" class="EG_Header" text="#custom_end_damage_taken"/>
+					<Label id="Col_Heal" class="EG_Header" text="#custom_end_heal"/>
+					<Label id="Col_Wards" class="EG_Header" text="#custom_end_wards"/>
+					<Label id="Col_KilledEnemies" class="EG_Header" text="#custom_end_kills"/>
+				</Panel>
+				<Panel id="PlayersContainer">
+				</Panel>
+			</Panel>
+		</snippet>
+		<snippet name="EG_Player">
+			<Panel class="EG_Player">
+				<Image id="HeroIcon" heroimagestyle="landscape" scaling="stretch-to-fit-preserve-aspect"/>
+				<Panel class="EG_StatContainer PlayerInfo">
+					<Label id="PlayerName" text="------"/>
+					<Label id="HeroNameAndDescription" text="#custom_scoreboard_hero_name_and_desc"/>
+					<Label id="RatingChanges" text="+0"
+						   onmouseover="DOTAShowTextTooltip(#EG_RatingChanges_Description)"
+						   onmouseout="DOTAHideTextTooltip()"/>
+				</Panel>
+				<Panel id="EG_KillsContainer" class="EG_StatContainer">
+					<Label id="Kills" text="0"/>
+				</Panel>
+				<Panel id="EG_DeathsContainer" class="EG_StatContainer">
+					<Label id="Deaths" text="0"/>
+				</Panel>
+				<Panel id="EG_AssistsContainer" class="EG_StatContainer">
+					<Label id="Assists" text="0"/>
+				</Panel>
+				<Panel id="EG_Items" class="EG_StatContainer">
+					<DOTAItemImage class="EG_Item"/>
+					<DOTAItemImage class="EG_Item"/>
+					<DOTAItemImage class="EG_Item"/>
+					<DOTAItemImage class="EG_Item"/>
+					<DOTAItemImage class="EG_Item"/>
+					<DOTAItemImage class="EG_Item"/>
+					<DOTAItemImage class="EG_Item EG_NeuralItem" scaling="stretch-to-fit-y-preserve-aspect"
+								   onmouseover="DOTAShowTitleTextTooltip(#DOTA_NeutralItemSlot_Title, #DOTA_NeutralItemSlot_Description)" 
+								   onmouseout="DOTAHideTitleTextTooltip()"/>
+				</Panel>
+				<Panel id="StatusEffects" class="EG_StatContainer">
+					<Image id="EG_AghScepter" src="s2r://panorama/images/hud/reborn/aghsstatus_scepter_psd.vtex"/>
+					<Image id="EG_AghShard" src="s2r://panorama/images/hud/reborn/aghsstatus_shard_psd.vtex"/>
+					<DOTAItemImage id="Moonshard" scaling="stretch-to-fit-y-preserve-aspect" itemname="item_moon_shard" class="NotActive"/>
+				</Panel>
+				<Panel class="EG_StatContainer PerkContainer">					
+					<Image id="Perk" class="EG_Item EG_NeuralItem " scaling="stretch-to-fit-y-preserve-aspect"
+								   onmouseover="DOTAShowTitleTextTooltip(#EG_Perk_Title, #EG_Perk_Description)"
+								   onmouseout="DOTAHideTitleTextTooltip()"/>
+				</Panel>
+				<Panel id="EG_Networth" class="EG_StatContainer">
+					<Label id="Networth" text="0"/>
+				</Panel>
+				<Panel id="EG_Gpm" class="EG_StatContainer">
+					<Label id="Gpm" text="0"/>
+				</Panel>
+				<Panel id="EG_Xpm" class="EG_StatContainer">
+					<Label id="Xpm" text="0"/>
+				</Panel>
+				<Panel id="EG_BuildingDamage" class="EG_StatContainer">
+					<Label id="BuildingDamage" text="0"/>
+				</Panel>
+				<Panel id="EG_HeroDamage" class="EG_StatContainer">
+					<Label id="HeroDamage" text="0"/>
+				</Panel>
+				<Panel id="EG_DamageTaken" class="EG_StatContainer">
+					<Label id="DamageTaken" text="0"/>
+				</Panel>
+				<Panel id="EG_Heal" class="EG_StatContainer">
+					<Label id="Heal" text="0"/>
+				</Panel>
+				<Panel id="EG_Wards" class="EG_StatContainer">
+					<Label id="Wards" text="{s:observers}/{s:sentries}"/>
+				</Panel>
+				<Panel id="EG_KilledHeroes" class="EG_StatContainer EG_KilledHeroes"/>
+			</Panel>
+		</snippet>
+	</snippets>
+	
+	<Panel class="EG_Root" hittest="false">
+		<Panel id="EG_MainPanel">
+			<Panel id="EG_TeamsTable" hittest="false"/>
+			
+			<Panel id="EG_Buttons">
+				<Button id="EG_ShowChat" class="EG_BottomButton" onactivate="EG_ShowChat()">
+					<Label text="#show_chat"/>
+				</Button>
+				<Button id="CloseButton" class="EG_BottomButton" onactivate="Game.FinishGame()">
+					<Label text="#CustomEndScreenClose" />
+				</Button>
+			</Panel>
+		</Panel>
+		<Panel id="EG_TopPanel">
+			<Label id="EG_VictoryLabel" text="#custom_end_screen_victory_message" />
+			<Button id="EG_TopClose" onactivate="Game.FinishGame()" />
+		</Panel>
+	</Panel>
+</root>

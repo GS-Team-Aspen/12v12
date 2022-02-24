@@ -1,6 +1,6 @@
 <root>
     <styles>
-		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
 		<include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
         <include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
         <include src="file://{resources}/layout/custom_game/common/party_highlighter/party_highlighter.css" />
@@ -60,6 +60,7 @@
 				</Panel>
 			</Panel>
 		</Panel>
+		<ToggleButton id="MuteAll" onactivate="MuteAll()" onmouseover="UIShowTextTooltip(#mute_all_hint)" onmouseout="UIHideTextTooltip()"/>
   </Panel>
 </root>
 

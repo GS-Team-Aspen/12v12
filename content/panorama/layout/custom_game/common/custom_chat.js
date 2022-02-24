@@ -1,7 +1,7 @@
 const NON_BREAKING_SPACE = "\u00A0";
 const BASE_MESSAGE_INDENT = NON_BREAKING_SPACE.repeat(19);
 
-GameEvents.Subscribe("custom_chat_message", (event) => {
+GameEvents.SubscribeProtected("custom_chat_message", (event) => {
 	let text = BASE_MESSAGE_INDENT;
 
 	const chatLinesPanel = FindDotaHudElement("ChatLinesPanel");

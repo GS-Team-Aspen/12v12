@@ -8,4 +8,8 @@
 	{
 
 	}
+
+	"auto_attack_setting" {
+		"value"					"short"
+	}
 }

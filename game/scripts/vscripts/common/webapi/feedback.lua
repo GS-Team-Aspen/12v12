@@ -13,7 +13,7 @@ end
 function Feedback:GetFeedbackFromPlayer(data)
 	local playerId = data.PlayerID
 	if not playerId then return end
-	if not self.feedbackCooldowns[playerId] or 
+	if not self.feedbackCooldowns[playerId] or
 		((GameRules:GetGameTime() - self.feedbackCooldowns[playerId]) > FEEDBACK_COOLDOWN) then
 		self.feedbackCooldowns[playerId] = GameRules:GetGameTime()
 		Timers:CreateTimer(FEEDBACK_COOLDOWN, function()
@@ -25,7 +25,8 @@ function Feedback:GetFeedbackFromPlayer(data)
 			"match/suggestion",
 			{
 				steamId = steamId,
-				content = data.text
+				content = data.text,
+				supporterLevel = Supporters:GetLevel(playerId),
 			},
 			function(data)
 				print("Successfully send suggestion")

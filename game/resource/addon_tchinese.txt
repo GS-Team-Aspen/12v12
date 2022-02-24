@@ -180,5 +180,7 @@
 
 		"HighSupportersOnly"					"僅限高級支持者"
 		"SupportersOnly"						"僅支持者"
+		
+		"DOTA_Chat_PlayedLeftDisconnectedTooLong"	"%s1 因斷開遊戲過久而被移出遊戲。"
 	}
 }

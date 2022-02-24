@@ -1,60 +1,16 @@
-"use strict";
-
-function onClose() {
-	$("#Leaderboard").visible = false;
+const LOCAL_PLAYER_ID = Game.GetLocalPlayerID();
+const LEADERBOARD = $.GetContextPanel();
+const LEADERBOARD_DATA = $("#LeaderboardData");
+function CloseLeaderboard() {
+	LEADERBOARD.SetHasClass("Show", false);
 }
-
-function getTableRecord(record, parent, id) {
-	let panel = $.CreatePanel("Panel", parent, id);
-	panel.BLoadLayoutSnippet("TableRecord");
-
-	panel.FindChildTraverse("Rank").text = record.rank;
-	panel.FindChildTraverse("PlayerAvatar").steamid = record.steamId;
-	panel.FindChildTraverse("PlayerUserName").steamid = record.steamId;
-	panel.FindChildTraverse("Rating").text = record.rating;
-
-	return panel;
-}
-
-function updateTable(players) {
-	let body = $("#TableBody");
-	body.RemoveAndDeleteChildren();
-
-	let localSteamId = Game.GetLocalPlayerInfo().player_steamid;
-	players.forEach((player, i) => {
-		let panel = getTableRecord(player, body);
-		if (player.steamId == localSteamId) panel.AddClass("local");
-	});
-}
-
-function updateLocalPlayer(player) {
-	let localPlayer = $("#LocalPlayer");
-	localPlayer.RemoveAndDeleteChildren();
-
-	getTableRecord(player, localPlayer);
-}
-
-function testLeaderboard() {
-	let leaderboard = [];
-	for (let i = 0; i < 100; i++) {
-		leaderboard.push({
-			rank: i,
-			steamId: /*"76561198057976123",*/ "76561198143905703",
-			rating: 2000,
-		});
-	}
-
-	updateTable(leaderboard);
-}
-
 (function () {
-	$("#Leaderboard").visible = false;
+	CloseLeaderboard();
 	const leaderboardButton = _AddMenuButton("OpenLeaderboard");
 	CreateButtonInTopMenu(
 		leaderboardButton,
 		() => {
-			let panel = $("#Leaderboard");
-			panel.visible = !panel.visible;
+			LEADERBOARD.ToggleClass("Show");
 		},
 		() => {
 			$.DispatchEvent("DOTAShowTextTooltip", leaderboardButton, "#leaderboard");
@@ -64,21 +20,26 @@ function testLeaderboard() {
 		},
 	);
 
-	SubscribeToNetTableKey("game_state", "leaderboard", (leaderboardObj) => {
-		let leaderboard = Object.values(leaderboardObj);
-		if (leaderboard.length == 0) return;
+	LEADERBOARD_DATA.RemoveAndDeleteChildren();
+	SubscribeToNetTableKey("game_state", "leaderboard", (leaderboard_data) => {
+		Object.entries(leaderboard_data).forEach(([place, data]) => {
+			const panel = $.CreatePanel("Panel", LEADERBOARD_DATA, "");
+			panel.BLoadLayoutSnippet("LeaderboardPlayer");
 
-		leaderboard.forEach((r, i) => (r.rank = i + 1));
+			panel.SetHasClass("dark", place % 2 == 0);
+			if (place <= 3) panel.AddClass(`top${place}`);
 
-		updateTable(leaderboard);
+			const set_value_label = (label_name, var_name, value) => {
+				panel.FindChildTraverse(label_name)[var_name] = value;
+			};
+			set_value_label("RankIndex", "text", place);
+			set_value_label("Rating", "text", data.rating);
+			set_value_label("player_avatar", "steamid", data.steamId);
+			set_value_label("player_user_name", "steamid", data.steamId);
+		});
 	});
-
-	SubscribeToNetTableKey("game_state", "player_ratings", (ratingsObj) => {
-		let localSteamId = Game.GetLocalPlayerInfo().player_steamid;
-		let ratings = Object.values(ratingsObj).filter((r) => r.steamId == localSteamId);
-
-		if (ratings.length == 0) return;
-
-		updateLocalPlayer(ratings[0]);
+	SubscribeToNetTableKey("game_state", "player_stats", (ratingsObj) => {
+		const local_data = ratingsObj[LOCAL_PLAYER_ID];
+		if (local_data && local_data.rating) $("#LocalPlayerRating").text = local_data.rating;
 	});
 })();

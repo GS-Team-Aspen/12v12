@@ -2,12 +2,22 @@ Payments = Payments or {}
 
 RegisterCustomEventListener("payments:create", function(event)
 	local payerId = event.PlayerID
-	local steamId = tostring(PlayerResource:GetSteamID(payerId))
+	local steamId = Battlepass:GetSteamId(payerId)
 	local matchId = tonumber(tostring(GameRules:Script_GetMatchID()))
-
+	local is_gift_code = event.isGiftCode or false
+	
+	if not steamId or not matchId then return end
+	
 	WebApi:Send(
 		"payment/create",
-		{ steamId = steamId, matchId = matchId, method = event.method, paymentKind = event.paymentKind },
+		{ 
+			steamId = steamId, 
+			matchId = matchId, 
+			method = event.method, 
+			paymentKind = event.paymentKind,
+			isGiftCode = is_gift_code, 
+			mapName = GetMapName() 
+		},
 		function(response)
 			local player = PlayerResource:GetPlayer(payerId)
 			if not player then return end
@@ -80,6 +90,15 @@ MatchEvents.ResponseHandlers.paymentUpdate = function(response)
 			BP_Inventory:AddItemLocal(response.purchasedItem.itemName, response.purchasedItem.steamId, response.purchasedItem.count)
 		end
 
+		if response.purchasedCodeDetails then
+			GiftCodes:AddCodeForPlayer(playerId, {
+				code = response.purchasedCodeDetails.Code,
+				paymentKind = response.purchasedCodeDetails.PaymentKind,
+				redeemerSteamId = "None",
+			})
+			GiftCodes:UpdateCodeDataClient(playerId)
+		end
+
 		if response.glory then
 			BP_PlayerProgress:ChangeGlory(playerId, response.glory - BP_PlayerProgress:GetGlory(playerId))
 		end
@@ -88,7 +107,20 @@ MatchEvents.ResponseHandlers.paymentUpdate = function(response)
 			BP_PlayerProgress:SetFortune(playerId, response.fortune)
 			BP_Masteries:UpdateFortune(playerId)
 		end
+		
+		if response.newRating and response.newRating[GetMapName()] then
+			local playersStats = CustomNetTables:GetTableValue("game_state", "player_stats");
+			if not playersStats then return end
 
+			local player_id_string = tostring(playerId)
+			if not playersStats[player_id_string] then return end
+			if not playersStats[player_id_string].rating then return end
+
+			playersStats[player_id_string].rating = response.newRating[GetMapName()]
+
+			CustomNetTables:SetTableValue("game_state", "player_stats", playersStats)
+		end
+		
 		BP_PlayerProgress:UpdatePlayerInfo(playerId)
 	end
 end

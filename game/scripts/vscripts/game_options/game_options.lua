@@ -5,9 +5,9 @@ local votesForInitOption = 12
 local gameOptions = {
 	[0] = {name = "super_towers"},
 	[1] = {name = "no_trolls_kick"},
-	[2] = {name = "no_switch_team"},
-	[3] = {name = "no_mmr_sort"},
-	[4] = {name = "no_bonus_for_weak_team"},
+	[2] = {name = "no_mmr_sort"},
+	[3] = {name = "no_bonus_for_weak_team"},
+	[4] = {name = "no_winrate_gold_bonus"},
 }
 
 function GameOptions:Init()
@@ -48,8 +48,11 @@ end
 function GameOptions:PlayerVoteForGameOption(data)
 	if not gameOptions[data.id] then return end
 
-	if gameOptions[data.id].players[data.PlayerID] == nil then
-		gameOptions[data.id].players[data.PlayerID] = true
+	local player_id = data.PlayerID
+	if not player_id then return end
+
+	if gameOptions[data.id].players[player_id] == nil then
+		gameOptions[data.id].players[player_id] = true
 		local newValue = gameOptions[data.id].votes + 1
 		gameOptions[data.id].votes = newValue
 		if newValue <= votesForInitOption then
@@ -57,9 +60,9 @@ function GameOptions:PlayerVoteForGameOption(data)
 			self:UpdatePause()
 		end
 	else
-		gameOptions[data.id].players[data.PlayerID] = not gameOptions[data.id].players[data.PlayerID]
+		gameOptions[data.id].players[player_id] = not gameOptions[data.id].players[player_id]
 		local newValue = -1
-		if gameOptions[data.id].players[data.PlayerID] then
+		if gameOptions[data.id].players[player_id] then
 			newValue = 1
 		end
 		gameOptions[data.id].votes = gameOptions[data.id].votes + newValue
@@ -72,9 +75,18 @@ function GameOptions:PlayerVoteForGameOption(data)
 	CustomNetTables:SetTableValue("game_state", "game_options", gameOptionsVotesForClient)
 end
 
+function GameOptions:RecordVotingResults()
+	local gameOptionsResults = {}
+	for _, option in pairs(gameOptions) do
+		gameOptionsResults[option.name] = option.votes >= votesForInitOption
+	end
+
+	CustomNetTables:SetTableValue("game_state", "game_options_results", gameOptionsResults)
+end
+
 function GameOptions:OptionsIsActive(name)
 	for _, option in pairs(gameOptions) do
-		if option.name == name then return option.votes >= votesForInitOption end
+		if option.name == name and option.votes then return option.votes >= votesForInitOption end
 	end
 	return nil
 end

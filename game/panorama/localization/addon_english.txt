@@ -15,6 +15,7 @@
 		"player_stats_title"							"Your statistics for {s:map_name}"
 		"player_stats_wins_loses"						"Wins/Loses: "
 		"player_stats_average_kda"						"Average KDA: "
+		"player_stats_average_streak"					"Win Streak (best/current): "
 
 		"patreon_perks"									"Supporter Perks"
 		"emblem_supporter"								"Supporter Emblem"

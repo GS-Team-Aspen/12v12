@@ -10,12 +10,12 @@ const ABILITIES_DEFAULT_ACTION = {
 		CastAbilityByDummy("high_five_custom");
 	},
 	default_cosmetic_ability: () => {
-		GameEvents.SendEventClientSide("battlepass_inventory:open_specific_collection", {
+		GameEvents.SendEventClientSideProtected("battlepass_inventory:open_specific_collection", {
 			category: "CosmeticAbilities",
 		});
 	},
 	spray_custom: () => {
-		GameEvents.SendEventClientSide("battlepass_inventory:open_specific_collection", {
+		GameEvents.SendEventClientSideProtected("battlepass_inventory:open_specific_collection", {
 			category: "Sprays",
 		});
 	},
@@ -148,10 +148,9 @@ function UpdateCosmeticDummy(data) {
 		$("#BarOverItems").SetParent(centerBlock);
 	}
 
-	FindDotaHudElement("buffs").style.transform = "translateY( -43px )";
-	FindDotaHudElement("debuffs").style.transform = "translateY( -43px )";
-	GameEvents.Subscribe("cosmetic_abilities:update_ability", UpdateCosmeticAbility);
-	GameEvents.Subscribe("cosmetic_abilities:update_dummy_tracking", UpdateCosmeticDummy);
-	GameEvents.Subscribe("cosmetic_abilities:update_spray", UpdateCosmeticSpray);
+	FindDotaHudElement("BuffContainer").style.marginBottom = "43px;";
+	GameEvents.SubscribeProtected("cosmetic_abilities:update_ability", UpdateCosmeticAbility);
+	GameEvents.SubscribeProtected("cosmetic_abilities:update_dummy_tracking", UpdateCosmeticDummy);
+	GameEvents.SubscribeProtected("cosmetic_abilities:update_spray", UpdateCosmeticSpray);
 	GameEvents.SendCustomGameEventToServer("cosmetic_abilities:get_dummy_caster", {});
 })();

@@ -20,6 +20,10 @@
 				<Label text="#player_stats_average_kda" />
 				<Label id="PlayerStatsAverageKDA" text="0/0/0" />
 			</Panel>
+			<Panel class="PlayerStatsLine">
+				<Label text="#player_stats_average_streak" />
+				<Label id="PlayerStatsAverageStreak" text="0/0" />
+			</Panel>
 		</Panel>
 	</Panel>
 </root>

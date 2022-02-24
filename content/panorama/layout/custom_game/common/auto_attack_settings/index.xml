@@ -1,0 +1,9 @@
+<root>
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+		<include src="file://{resources}/layout/custom_game/common/auto_attack_settings/index.js" />
+	</scripts>
+	
+	<Panel style="visibility:collapse;" hittest="false">
+	</Panel>
+</root>

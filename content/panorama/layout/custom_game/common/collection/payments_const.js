@@ -5,6 +5,10 @@ const PAYMENT_VALUES = {
 	golden_booster: {
 		price: "34.00",
 	},
+	reset_mmr: {
+		price: "4.99",
+		no_gifteable: true,
+	},
 };
 
 const EXCHANGE_RATE = {

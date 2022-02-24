@@ -1,0 +1,69 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
+		<include src="file://{resources}/layout/custom_game/common/synced_chat/synced_chat.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+		<include src="file://{resources}/layout/custom_game/common/synced_chat/synced_chat.js" />
+	</scripts>
+
+	<snippets>
+		<snippet name="SC_MessageLine">
+			<Panel class="SC_Message">
+				<Panel class="SC_Message_Info">
+					<DOTAAvatarImage id="SC_Msg_Avatar" class="SC_Msg_Component"/>
+					<DOTAUserName id="SC_Msg_Name" class="SC_Msg_Component"/>
+					<Image id="SC_Msg_Anon_Image" src="file://{resources}/images/custom_game/no_user.png"/>
+					<Label id="SC_Msg_Anon" class="SC_Msg_Component" text="#anon_player"/>
+					<Panel id="SC_Dev_Root" class="SC_Msg_Component">
+						<Label class="SC_Dev SC_Msg_Component" text="#sc_dev"/>
+						<Label id="SC_Dev_Name" class="SC_Msg_Component"/>
+					</Panel>
+					<Label id="SC_Msg_Date" class="SC_Msg_Component"/>
+				</Panel>
+				<Label id="SC_Msg_Text" html="true"/>
+			</Panel>
+		</snippet>
+		<snippet name="MoreMessage">
+			<Button class="ChatButton">
+				<Image src="file://{resources}/images/custom_game/supp_plus.png"/>
+				<Label text="#load_more_messages"/>
+			</Button>
+		</snippet>
+	</snippets>
+
+	<Panel class="SC_Root" hittest="true" acceptinput="true" onblur="CloseSyncedChat()" oncancel="CloseSyncedChat()" onactivate="">
+		<Panel id="SC_ChatHeader">
+			<Label id="SC_ChatHeaderText" text="#synced_chat_header"/>
+			<Button id="SC_Close" onactivate="CloseSyncedChat()"/>
+		</Panel>
+		<Panel id="SC_MessagesRoot">
+			<Panel id="SC_MessagesContainer" hittest="false">
+				<!-- filled with snippets from code -->
+			</Panel>
+			<Label id="SC_NotLoadedAlert" text="#synced_chat_loading"/>
+		</Panel>
+		<Panel id="SC_InputLine">
+			<TextEntry id="SC_TextEntry" multiline="false" placeholder="#synced_chat_placeholder" maxchars="100"
+						ontextentrychange="UpdateChatMessageText()" oninputsubmit="SendChatMessage()" onfocus="FocusEntry(true)" onblur="FocusEntry(false)"/>
+			<Label id="SC_SymbolsCounter" text="{s:curr}/{s:max}" />
+			<Button id="SC_Submit" onactivate="SendChatMessage()" onmouseover="DOTAShowTextTooltip(#synced_chat_tooltip)" onmouseout="DOTAHideTextTooltip()">
+				<Label id="SC_SubmitText" text="#feedback_send"/>
+			</Button>
+			<Panel id="SC_InputBox1">
+				<Panel id="TimerForUpdateRoot" onmouseover="DOTAShowTextTooltip(#sc_time_to_refresh_messages)" onmouseout="DOTAHideTextTooltip()">
+					<Image src="file://{resources}/images/custom_game/clock-icon.png"/>
+					<Label text="0:{s:sec}"/>
+				</Panel>
+				<ToggleButton id="AnonMessageCheck">
+					<Label text="#be_anonymous" />
+				</ToggleButton>
+			</Panel>
+			<Panel id="SC_MuteRoot">
+				<Label text="#sc_mute_date"/>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

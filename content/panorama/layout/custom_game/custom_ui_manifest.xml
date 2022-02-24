@@ -1,5 +1,9 @@
 <root>
+	<styles>
+		<include src="file://{resources}/layout/custom_game/precache.css" />
+	</styles>
 	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/protected_custom_events.js" />
 		<include src="file://{resources}/layout/custom_game/common/utils.js" />
 		<include src="file://{resources}/layout/custom_game/common/selection.js" />
 		<include src="file://{resources}/layout/custom_game/common/display_error.js" />
@@ -30,7 +34,7 @@
 			}
 		}
 
-		GameEvents.Subscribe('debug_message', (data) => {
+		GameEvents.SubscribeProtected('debug_message', (data) => {
 		    let arr = data.message
 		    if (typeof data.message == 'object')
 		        for (k in arr){
@@ -45,28 +49,33 @@
 
 	<Panel>
 		<CustomUIElement type="GameSetup"			layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
+		<CustomUIElement type="GameSetup"			layoutfile="file://{resources}/layout/custom_game/team_select_notice.xml" />
 		<CustomUIElement type="GameSetup"			layoutfile="file://{resources}/layout/custom_game/voting_for_game_options.xml" />
 		<CustomUIElement type="FlyoutScoreboard"	layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 		<CustomUIElement type="HeroSelection" 		layoutfile="file://{resources}/layout/custom_game/common/pick_locker/pick_locker.xml" />
 		<CustomUIElement type="HeroSelection" 		layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
 		<CustomUIElement type="HeroSelection" 		layoutfile="file://{resources}/layout/custom_game/common/hero_selection_overlay/hero_selection_overlay.xml" />
-		<CustomUIElement type="EndScreen" 			layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
-		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/precache.xml" />
+		<CustomUIElement type="EndScreen" 		layoutfile="file://{resources}/layout/custom_game/end_screen/end_screen.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/collection/collection.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/cosmetic_abilities/cosmetic_abilities.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/top_scoreboard.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/patreon/patreon.xml"/>
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/dota_hud_chat_wheel.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/neutral_items/neutral_items.xml" />
-		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/patreon/game_perk/patreons_game_perk.xml" />
+		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/game_perks/game_perks.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/voting_to_kick/voting_to_kick.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/leaderboard.xml" />
-		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/change_team/change_team.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/auto_team_notification.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/notifications_ui/notifications_ui.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/ingame_warning/ingame_warning.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/feedback/feedback.xml" />
-		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/fix_custom_game/fix_custom_game.xml" />
-		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/minimap_overlay/minimap_overlay.xml" />
+		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/common/collection/gift_codes/gift_codes.xml" />
+		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/common/custom_pings/custom_pings.xml" />
+		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/common/synced_chat/synced_chat.xml" />
+	<!--<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/common/fix_custom_game/fix_custom_game.xml" />-->
+		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/common/shortcut_shop/shortcut_shop.xml" />
+
+		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/common/auto_attack_settings/index.xml" />
+		<CustomUIElement type="Hud" 				layoutfile="file://{resources}/layout/custom_game/common/custom_hud_message/custom_hud_message.xml" />
 	</Panel>
 </root>

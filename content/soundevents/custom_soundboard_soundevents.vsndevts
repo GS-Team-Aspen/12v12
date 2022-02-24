@@ -160,4 +160,56 @@
 		limiter_on = 1.000000
 		vsnd_files = "sounds/misc/soundboard/kor_million_dollar_house.vsnd"
 	}
+	soundboard.ceb.start = 
+	{
+		type = "dota_src1_2d"
+		volume = 0.500000
+		pitch = 1.000000
+		volume_fade_out = 0.050000
+		max_gain_change_per_second = 100.000000
+		limiter_on = 1.000000
+		vsnd_files = "sounds/misc/soundboard/ceeeb_start.vsnd"
+	}
+	soundboard.ceb.stop = 
+	{
+		type = "dota_src1_2d"
+		volume = 0.500000
+		pitch = 1.000000
+		volume_fade_in = 0.030000
+		max_gain_change_per_second = 100.000000
+		limiter_on = 1.000000
+		vsnd_files = "sounds/misc/soundboard/ceeeb_stop.vsnd"
+	}
+	synced_chat.ping = 
+	{
+		type = "dota_src1_2d"
+		volume = 1.000000
+		pitch = 1.000000
+		limiter_on = 1.000000
+		vsnd_files = "sounds/ui/economy/plink_goal_tier3.vsnd"
+	}
+	synced_chat.anon = 
+	{
+		type = "dota_src1_2d"
+		volume = 0.600000
+		pitch = 1.000000
+		limiter_on = 1.000000
+		vsnd_files = "sounds/ui/ui_draft_order_advance.vsnd"
+	}
+	synced_chat.symbols_limit = 
+	{
+		type = "dota_src1_2d"
+		volume = 0.500000
+		pitch = 1.000000
+		limiter_on = 1.000000
+		vsnd_files = "sounds/ui/inventory/bone_pickup_01.vsnd"
+	}
+	synced_chat.submit = 
+	{
+		type = "dota_src1_2d"
+		volume = 0.300000
+		pitch = 1.000000
+		limiter_on = 1.000000
+		vsnd_files = "sounds/ui/item_recipe_drop_shop.vsnd"
+	}
 }

@@ -11,12 +11,13 @@ function modifier_dummy_caster:CheckState()
 		[MODIFIER_STATE_CANNOT_BE_MOTION_CONTROLLED] = true,
 		[MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY] = true,
 		[MODIFIER_STATE_DISARMED] = true,
+		--[MODIFIER_STATE_STUNNED] = true,
+		--[MODIFIER_STATE_SILENCED] = true,
 		[MODIFIER_STATE_OUT_OF_GAME] = true,
 		[MODIFIER_STATE_NOT_ON_MINIMAP] = true,
 		[MODIFIER_STATE_INVISIBLE] = true,
 	}
 end
 
-function modifier_dummy_caster:GetPriority()
-	return MODIFIER_PRIORITY_SUPER_ULTRA
-end
+function modifier_dummy_caster:GetPriority() return MODIFIER_PRIORITY_SUPER_ULTRA end
+function modifier_dummy_caster:IsHidden() return true end

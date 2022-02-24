@@ -1,0 +1,19 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
+		<include src="file://{resources}/layout/custom_game/common/custom_hud_message/custom_hud_message.css"/>
+		<include src="file://{resources}/layout/custom_game/common/styles/dotau_styles.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/layout/custom_game/common/utils.js" />
+		<include src="file://{resources}/layout/custom_game/common/custom_hud_message/custom_hud_message.js"/>
+	</scripts>
+
+	<Panel class="DOTAU_HudMessagesRoot" hittest="false">
+		<Panel id="DOTAU_HudMessageContainer">
+			<Label id="DOTAU_HudText" text="#dotau_hud_message"/>
+			<Label id="DOTAU_HudTextClose" text="#dotau_hud_message_close" onactivate="CloseMessage()"/>
+		</Panel>
+	</Panel>
+</root>

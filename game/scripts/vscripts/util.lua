@@ -12,6 +12,27 @@ function CDOTA_BaseNPC:IsRealHero()
 	end
 end
 
+function CDOTA_BaseNPC:RegisterManuallySpentAttributePoint()
+	self.manually_spent_ability_points = (self.manually_spent_ability_points or 0) + 1
+end
+
+function CDOTA_BaseNPC:GetManuallySpentAttributePoints()
+	return self.manually_spent_ability_points or 0
+end
+
+function CDOTA_BaseNPC:CheckManuallySpentAttributePoints()
+	local attributes_ability = self:FindAbilityByName('special_bonus_attributes')
+	if not attributes_ability then return end
+
+	local spent_points = attributes_ability:GetLevel()
+	local spent_points_manually = self:GetManuallySpentAttributePoints()
+	
+	if spent_points > spent_points_manually then
+		attributes_ability:SetLevel(spent_points_manually)
+		self:SetAbilityPoints(self:GetAbilityPoints() + (spent_points - spent_points_manually))
+	end
+end
+
 function math.sign(x)
 	if x > 0 then
 		return 1
@@ -61,8 +82,7 @@ function table.length(tbl)
   	return amount
 end
 
-
-function table.concat(tbl1,tbl2)
+function table.concat_handle(tbl1,tbl2)
 	local tbl = {}
 	for k,v in ipairs(tbl1) do
 		table.insert(tbl,v)

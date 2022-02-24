@@ -63,7 +63,7 @@
 #TopCloseButton {
 	width: 24px;
 	height: 24px;
-	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-image: url("file://{resources}/images/custom_game/import_dota/x_close_png.png");
 	background-size: 24px 24px;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
@@ -254,7 +254,7 @@
 }
 
 .local_player_team #PlayersContainer {
-	box-shadow: fill #ffffff40 -3px -3px 3px 6px;
+	box-shadow: fill #ffffff40 0px 0px 6px 3px;
 }
 
 .TeamId {
@@ -460,4 +460,16 @@
 .ScoreCol_Gold {
 	width: 70px;
 	text-align: center;
+}
+.MmrInc {
+	color: gradient(linear, 0% 100%, 0% 0%, from(#288f30), to(#10b00c));
+}
+.is_local_player .MmrInc {
+	color: gradient(linear, 0% 100%, 0% 0%, from(#288f30), to(#10b00c));
+}
+.MmrDec {
+	color: gradient(linear, 0% 100%, 0% 0%, from(#9c1b1f), to(#e61017));
+}
+.is_local_player .MmrDec {
+	color: gradient(linear, 0% 100%, 0% 0%, from(#9c1b1f), to(#e61017));
 }

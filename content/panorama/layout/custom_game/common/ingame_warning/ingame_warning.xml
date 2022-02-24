@@ -1,6 +1,6 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="s2r://panorama/styles/dotastyles.vcss_c"/>
 		<include src="file://{resources}/layout/custom_game/common/ingame_warning/ingame_warning.css" />
 	</styles>
 
@@ -10,24 +10,5 @@
 	</scripts>
 
 	<Panel class="IngameWarningRoot" hittest="false">
-		<Panel id="WarningIngame_ResetMMR" class="WarningIngame">
-			<Panel id="ResetMmrHeaderRoot">
-				<Label id="ResetMmrHeader" text="#reset_mmr"/>
-			</Panel>
-			<Panel id="ResetMmrHintRoot">
-				<Label id="ResetMmrHint" html="true" text="#reset_mmr_hint"/>
-			</Panel>
-			<Panel id="ResetMmrCooldownRoot">
-				<Label id="ResetMmrCooldown" html="true" text="#reset_mmr_cooldown"/>
-			</Panel>
-			<Panel id="ResetMmrButtonsRoot">
-				<Button id="ButtonResetMmr" class="ResetMmrButton" onactivate="ResetMmrRequest()">
-					<Label class="WarningButtonText" text="#yes"/>
-				</Button>
-				<Button class="ResetMmrButton" onactivate="CloseResetMmr()">
-					<Label class="WarningButtonText" text="#no"/>
-				</Button>
-			</Panel>
-		</Panel>
 	</Panel>
 </root>
