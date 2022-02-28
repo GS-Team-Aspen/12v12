@@ -1,7 +1,7 @@
 require("common/game_perks/base_game_perk")
 
 bonus_all_stats = class(base_game_perk)
-
+function bonus_all_stats:AllowIllusionDuplicate() return true end
 function bonus_all_stats:DeclareFunctions()
 	return { 
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS, 
