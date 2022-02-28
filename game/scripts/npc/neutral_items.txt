@@ -270,10 +270,6 @@
 		"items"
 		{
 			"item_giants_ring"		 		  "1"
-			"item_ballista"			  		  "1"
-			"item_woodland_striders"		  "1"
-			"item_recipe_trident"			  "1"
-			"item_fusion_rune"				  "1"
 		}
 	}
 }
