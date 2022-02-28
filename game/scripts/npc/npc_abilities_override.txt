@@ -128,14 +128,14 @@
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_heroes"					"12 31 50 70"
+				"damage_heroes"					"15 30 45 60"
 				"LinkedSpecialBonus"			"special_bonus_unique_elder_titan"
 				"CalculateSpellDamageTooltip"	"0"
 			}
 			"30"	//scepter_magic_immune_per_hero
 			{
 				"var_type"						"FIELD_FLOAT"
-				"scepter_magic_immune_per_hero_new_value"	"1.75"
+				"scepter_magic_immune_per_hero_new_value"	"1.5"
 			}
 		}
 	}
