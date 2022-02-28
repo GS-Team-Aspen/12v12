@@ -1,7 +1,7 @@
 require("common/game_perks/base_game_perk")
 
 bonus_agi = class(base_game_perk)
-
+function bonus_agi:AllowIllusionDuplicate() return true end
 function bonus_agi:DeclareFunctions() return { MODIFIER_PROPERTY_STATS_AGILITY_BONUS } end
 function bonus_agi:GetTexture() return "perkIcons/bonus_agi" end
 function bonus_agi:GetModifierBonusStats_Agility()
