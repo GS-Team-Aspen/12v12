@@ -1,7 +1,7 @@
 require("common/game_perks/base_game_perk")
 
 str_for_kill = class(base_game_perk)
-
+function str_for_kill:AllowIllusionDuplicate() return true end
 function str_for_kill:DeclareFunctions() return { MODIFIER_PROPERTY_STATS_STRENGTH_BONUS, MODIFIER_EVENT_ON_HERO_KILLED } end
 
 function str_for_kill:OnHeroKilled(keys)

@@ -1,7 +1,7 @@
 require("common/game_perks/base_game_perk")
 
 int_for_kill = class(base_game_perk)
-
+function int_for_kill:AllowIllusionDuplicate() return true end
 function int_for_kill:DeclareFunctions() return { MODIFIER_PROPERTY_STATS_INTELLECT_BONUS, MODIFIER_EVENT_ON_HERO_KILLED } end
 
 function int_for_kill:OnHeroKilled(keys)
