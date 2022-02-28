@@ -828,7 +828,7 @@
 	}
     "item_aghanims_shard"
 	{
-		"ItemInitialStockTime"			"810"
+		"ItemInitialStockTime"			"990"
 	}
 	
 	"item_teleport_perk_0"
