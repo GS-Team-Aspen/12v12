@@ -1,7 +1,7 @@
 require("common/game_perks/base_game_perk")
 
 bonus_str = class(base_game_perk)
-
+function bonus_str:AllowIllusionDuplicate() return true end
 function bonus_str:DeclareFunctions() return { MODIFIER_PROPERTY_STATS_STRENGTH_BONUS } end
 function bonus_str:GetTexture() return "perkIcons/bonus_str" end
 function bonus_str:GetModifierBonusStats_Strength()
